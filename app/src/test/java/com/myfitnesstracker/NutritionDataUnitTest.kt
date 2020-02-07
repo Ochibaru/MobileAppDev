@@ -1,9 +1,16 @@
 package com.myfitnesstracker
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.myfitnesstracker.ui.main.MainViewModel
+import org.junit.Assert.*
+import org.junit.Rule
+import org.junit.Test
+import org.junit.rules.TestRule
+
 class NutritionDataUnitTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
-    lateinit var mvm:MainViewModel
+    lateinit var mvm: MainViewModel
 
 
 // alt + enter to auto create function
