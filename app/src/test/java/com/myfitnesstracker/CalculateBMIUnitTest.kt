@@ -18,7 +18,7 @@ class CalculateBMIUnitTest {
     fun inputHeightWeightImperial_outputBMI() {
         givenAFeedOfUserInputIsAvailable()
         whenUserInputHeightWeightImperial()
-        thenResultsContainCalculatedBMI()
+        thenResultsContainCalculatedBMIImperial()
     }
 
 
@@ -32,7 +32,7 @@ class CalculateBMIUnitTest {
     }
 
 
-    private fun thenResultsContainCalculatedBMI() {
+    private fun thenResultsContainCalculatedBMIImperial() {
         var calculatedBMICorrectly = false
         val correctBMI = 24.96
         private IBMIService bmiService
@@ -50,7 +50,7 @@ class CalculateBMIUnitTest {
     fun inputHeightWeightMetric_outputBMI() {
         givenAFeedOfUserInputIsAvailable()
         whenUserInputHeightWeightMetric()
-        thenResultsContainCalculatedBMI()
+        thenResultsContainCalculatedBMIMetric()
     }
 
 
@@ -59,7 +59,7 @@ class CalculateBMIUnitTest {
     }
 
 
-    private fun thenResultsContainCalculatedBMI(){
+    private fun thenResultsContainCalculatedBMIMetric(){
         var calculatedBMICorrectly = false
         val correctBMI = 24.98
         private IBMIService bmiService
