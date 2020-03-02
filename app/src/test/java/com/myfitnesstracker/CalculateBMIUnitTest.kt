@@ -28,7 +28,7 @@ class CalculateBMIUnitTest {
 
 
     private fun whenUserInputHeightWeightImperial() {
-        mvn.fetchUserInputBMI("65 in", "150 lbs")     // not sure if this needs parameters
+        mvn.fetchUserInputBMI("65 in", "150 lbs")
     }
 
 
@@ -80,7 +80,7 @@ class CalculateBMIUnitTest {
 
 
     private fun whenUserInputsNaN() {
-        mvn.fetchUserInputBMI("afa", "rawr")
+        mvn.fetchUserInputBMI("afa", "234")
 
 
     }

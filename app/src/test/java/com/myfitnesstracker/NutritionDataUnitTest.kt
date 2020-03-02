@@ -13,9 +13,6 @@ class NutritionDataUnitTest {
     lateinit var mvm: MainViewModel
 
 
-// alt + enter to auto create function
-
-
     @Test
     fun confirmPho_outputsPho() {
         givenAFeedOfNutritionDataAreAvailable()

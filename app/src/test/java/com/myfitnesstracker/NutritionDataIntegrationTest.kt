@@ -12,10 +12,6 @@ class NutritionDataIntegrationTest {
     var rule: TestRule = InstantTaskExecutorRule()
     lateinit var mvm: MainViewModel
 
-
-// alt + enter to auto create function
-
-
     @Test
     fun confirmPho_outputsPho() {
         givenAFeedOfNutritionDataAreAvailable()
