@@ -12,7 +12,7 @@ class NutritionDataUnitTest {
     var rule: TestRule = InstantTaskExecutorRule()
     lateinit var mvm: MainViewModel
 
-
+/*
 // alt + enter to auto create function
 
 
@@ -67,4 +67,6 @@ class NutritionDataUnitTest {
             assertEquals( 0, it.size)
         }
     }
+
+ */
 }

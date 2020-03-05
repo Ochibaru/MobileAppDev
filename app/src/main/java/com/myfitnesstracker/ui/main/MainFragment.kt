@@ -7,12 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.myfitnesstracker.R
+import kotlinx.android.synthetic.main.main_fragment.*
+import android.widget.ArrayAdapter
+import androidx.lifecycle.Observer
+import com.myfitnesstracker.ui.dto.BMI
 
 class MainFragment : Fragment() {
-
-    companion object {
-        fun newInstance() = MainFragment()
-    }
 
     private lateinit var viewModel: MainViewModel
 
@@ -26,7 +26,33 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel.bmis.observe(viewLifecycleOwner, Observer {
+            bmis -> spnBmi.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, bmis))
+        })
+
+        btnCalculate.setOnClickListener{
+            saveWeightHeight()
+        }
     }
 
+    private fun saveWeightHeight() {
+        var bmi = BMI().apply {
+            weight = txtWeight.text.toString().toDouble()
+            height = txtHeight.text.toString().toDouble()
+            bmi = (weight / (height * height)) * 703
+            txtBmi.text = bmi.toString()
+        }
+        viewModel.save(bmi)
+    }
+
+    fun fetchUserInputBMI(weight: Double, height: Double): String {
+        var weight = txtWeight.text.toString().toDouble()
+        var height = txtHeight.text.toString().toDouble()
+
+        return "$weight $height"
+    }
+
+    companion object {
+        fun newInstance() = MainFragment()
+    }
 }
