@@ -22,18 +22,21 @@ class NutritionDataUnitTest {
 
 
     private fun givenAFeedOfNutritionDataAreAvailable() {
-        mvn = MainViewModel()
+        //Changed from mvn to mvm
+        mvm = MainViewModel()
     }
 
 
     private fun whenSearchForPho() {
-        mvn.fetchNutritionInfo("pho")
+        //Changed from mvn to mvm
+        mvm.fetchNutritionInfo("pho")
     }
 
 
     private fun thenResultContainsPhoNutritionInfo() {
         var phoFound = false;
-        mvn.nutrition.observeForever {
+        //Changed from mvn to mvm
+        mvm.nutrition.observeForever {
             // here is the observing
             assertNotNull(it)
             assertTrue(it.size > 0)
@@ -55,12 +58,14 @@ class NutritionDataUnitTest {
 
 
     private fun whenISearchForGarbage() {
-        mvn.fetchNutritionInfo("asfggagsdfjaiagg")
+        //Changed from mvn to mvm
+        mvm.fetchNutritionInfo("asfggagsdfjaiagg")
     }
 
 
     private fun thenIGetZeroResults() {
-        mvn.nutrition.observeForever {
+        //Changed from mvn to mvm
+        mvm.nutrition.observeForever {
             assertEquals( 0, it.size)
         }
     }
