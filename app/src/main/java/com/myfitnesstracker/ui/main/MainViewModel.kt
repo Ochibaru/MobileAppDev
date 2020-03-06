@@ -57,12 +57,12 @@ class MainViewModel : ViewModel() {
       get() {return _bmis}
       set(value) {_bmis = value}
 
-/*
-    //var userBMI = mainFragment.calculateBMI()
-    fun fetchUserBMI(bmi: Double){
 
+    //var userBMI = mainFragment.calculateBMI()
+    fun saveBMI(bmi: String){
+       var calculatedbmi = mainFragment.saveBMI(bmi)
     }
-*/
+
     fun fetchUserInputBMI(weight: Double, height: Double) {
       var userInputBMI = mainFragment.fetchUserInputBMI(weight, height)
    }
