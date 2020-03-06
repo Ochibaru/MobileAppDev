@@ -7,13 +7,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
 
-class NutritionDataUnitTest {
+class NutritionDataIntegrationTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
     lateinit var mvm: MainViewModel
-/*
-// alt + enter to auto create function
-
 
     @Test
     fun confirmPho_outputsPho() {
@@ -66,6 +63,4 @@ class NutritionDataUnitTest {
             assertEquals( 0, it.size)
         }
     }
-
- */
 }
