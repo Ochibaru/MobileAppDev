@@ -1,6 +1,7 @@
 package com.myfitnesstracker
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.myfitnesstracker.ui.dto.BMI
 import com.myfitnesstracker.ui.main.MainViewModel
 import org.junit.Rule
 import org.junit.Test
@@ -8,11 +9,9 @@ import org.junit.rules.TestRule
 
 class CalculateBMIUnitTest {
 
-
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
     lateinit var mvm: MainViewModel
-
 
     @Test
     fun inputHeightWeightImperial_outputBMI() {
@@ -21,31 +20,27 @@ class CalculateBMIUnitTest {
         thenResultsContainCalculatedBMIImperial()
     }
 
-
     private fun givenAFeedOfUserInputIsAvailable() {
-        mvn = MainViewModel()
+        mvm = MainViewModel()
     }
 
-
     private fun whenUserInputHeightWeightImperial() {
+        mvm.fetchUserInputBMI(150.0, 65.0)     // not sure if this needs parameters
         mvn.fetchUserInputBMI("65 in", "150 lbs")
     }
 
-
     private fun thenResultsContainCalculatedBMIImperial() {
         var calculatedBMICorrectly = false
-        val correctBMI = 24.96
-        private IBMIService bmiService
-        var calculatedBMI = bmiService.calculateBMI("65 in", "150 lbs")
+        var correctBMI = "24.96"
+        var userBMI = BMI(150.0, 65.0, 24.96)
+        //private BMIService bmiService
+        //var calculatedBMI = userBMI
 
-
-        if (correctBMI = calculatedBMI)
+        if (correctBMI = userBMI) {
             calculatedBMICorrectly = true
-
-
+        }
     }
-
-
+/*
     @Test
     fun inputHeightWeightMetric_outputBMI() {
         givenAFeedOfUserInputIsAvailable()
@@ -53,11 +48,9 @@ class CalculateBMIUnitTest {
         thenResultsContainCalculatedBMIMetric()
     }
 
-
     private fun whenUserInputHeightWeightMetric(){
-        mvn.fetchUserInputBMI("165 cm", "68 kg")
+        mvm.fetchUserInputBMI("165 cm", "68 kg")
     }
-
 
     private fun thenResultsContainCalculatedBMIMetric(){
         var calculatedBMICorrectly = false
@@ -65,11 +58,9 @@ class CalculateBMIUnitTest {
         private IBMIService bmiService
         var calculatedBMI = bmiService.calculateBMI("165 cm", "68 kg")
 
-
         if (correctBMI = calculatedBMI)
             calculatedBMICorrectly = true
     }
-
 
     @Test
     fun inputHeightWeightNaN() { //NaN = not a number
@@ -78,17 +69,13 @@ class CalculateBMIUnitTest {
         thenThrowsError()
     }
 
-
     private fun whenUserInputsNaN() {
+        mvm.fetchUserInputBMI("afa", "rawr")
         mvn.fetchUserInputBMI("afa", "234")
-
-
     }
-
 
     private fun thenThrowsError() {
         // needs to be done
     }
-
-
+    */
 }

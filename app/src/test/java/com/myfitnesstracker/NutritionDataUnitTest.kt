@@ -11,6 +11,8 @@ class NutritionDataUnitTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
     lateinit var mvm: MainViewModel
+/*
+// alt + enter to auto create function
 
 
     @Test
@@ -64,4 +66,6 @@ class NutritionDataUnitTest {
             assertEquals( 0, it.size)
         }
     }
+
+ */
 }

@@ -1,0 +1,2 @@
+interface BMI_DAO {
+}
