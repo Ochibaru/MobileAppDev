@@ -10,6 +10,7 @@ import com.myfitnesstracker.ui.dto.BMI
 
 class MainViewModel : ViewModel() {
 
+   val nutrition: Any
    private var mainFragment: MainFragment = MainFragment()
    private lateinit var firestore : FirebaseFirestore
    private var _bmis: MutableLiveData<ArrayList<BMI>> = MutableLiveData<ArrayList<BMI>>()
@@ -66,5 +67,13 @@ class MainViewModel : ViewModel() {
     fun fetchUserInputBMI(weight: Double, height: Double) {
       var userInputBMI = mainFragment.fetchUserInputBMI(weight, height)
    }
+
+    fun fetchNutritionInfo(s: String) {
+
+    }
+}
+
+private fun Any.addSnapshotListener(any: Any) {
+
 }
 
