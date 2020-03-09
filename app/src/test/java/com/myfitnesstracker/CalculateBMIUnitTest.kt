@@ -36,7 +36,7 @@ class CalculateBMIUnitTest {
         //private BMIService bmiService
         //var calculatedBMI = userBMI
 
-        if (correctBMI = userBMI) {
+        if (correctBMI == userBMI) {
             calculatedBMICorrectly = true
         }
     }
