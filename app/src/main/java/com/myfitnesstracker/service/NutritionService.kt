@@ -1,20 +1,20 @@
 package com.myfitnesstracker.service
 
 import androidx.lifecycle.MutableLiveData
-import com.myfitnesstracker.dao.NutritionDAO
+import com.myfitnesstracker.dao.INutritionDAO
 import com.myfitnesstracker.dto.Nutrition
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import ui.main.RetrofitClientInstance
+import com.myfitnesstracker.RetrofitClientInstance
 
 class NutritionService {
-    fun fetch(): MutableLiveData<ArrayList<Nutrition>> {
+    fun fetch(nutrition: String): MutableLiveData<ArrayList<Nutrition>> {
         //initiating variable nutrition to ArrayList
         var _nutrition = MutableLiveData<ArrayList<Nutrition>>()
-        //initiationg a variable with retrofitInstance
-        val service = RetrofitClientInstance.retrofitInstance?.create(NutritionDAO::class.java)
-        val call = service?.getNutrition()
+        //initiation a variable with retrofitInstance
+        val service = RetrofitClientInstance.retrofitInstance?.create(INutritionDAO::class.java)
+        val call = service?.getNutrition(nutrition)
         //calling enqueue
         call?.enqueue(object: Callback<ArrayList<Nutrition>> {
             /*
@@ -46,4 +46,6 @@ class NutritionService {
         //returning the value
         return _nutrition
     }
+
+
 }

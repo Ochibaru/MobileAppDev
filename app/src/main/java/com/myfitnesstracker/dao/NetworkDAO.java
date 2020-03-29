@@ -1,3 +1,7 @@
+package com.myfitnesstracker.dao;
+
+import okhttp3.*;
+
 public class NetworkDAO {
     /**
      * Return the data found at the given endpoint

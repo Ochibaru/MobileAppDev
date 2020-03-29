@@ -42,7 +42,15 @@ class MainFragment : Fragment() {
             bmi = (weight / (height * height)) * 703
             txtBmi.text = bmi.toString()
         }
-        viewModel.save(bmi)
+        // viewModel.save(bmi)          Commenting out till error with firestore is fixed
+    }
+
+    fun saveBMI(bmi: String): String {
+           var weight = txtWeight.text.toString().toDouble()
+           var height = txtHeight.text.toString().toDouble()
+           var bmi = (weight / (height * height)) * 703
+
+            return "$bmi"
     }
 
     fun fetchUserInputBMI(weight: Double, height: Double): String {

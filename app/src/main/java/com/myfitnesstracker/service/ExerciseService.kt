@@ -1,9 +1,19 @@
+package com.myfitnesstracker.service
+
+import IExerciseDAO
+import androidx.lifecycle.MutableLiveData
+import com.myfitnesstracker.RetrofitClientInstanceNutritionix
+import com.myfitnesstracker.dto.ExerciseDTO
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 class ExerciseService {
 
     internal fun fetchExercise(exercise: String) : MutableLiveData<ArrayList<ExerciseDTO>> {
         var _exercises = MutableLiveData<ArrayList<ExerciseDTO>>()
-        val service = RetrofitClientInstance.retrofitInstance?.create(IExerciseDAO::class.java)
-        val call = service?.getExercise()
+        val service = RetrofitClientInstanceNutritionix.retrofitInstance?.create(IExerciseDAO::class.java)
+        val call = service?.getExercise(exercise)
         call?.enqueue(object : Callback<ArrayList<ExerciseDTO>> {
 
             /**
@@ -31,22 +41,4 @@ class ExerciseService {
         })
         return _exercises
     }
-}
-
-    /*
-    private IExerciseDAO exerciseDAO;
-    ExerciseService() {
-        val retrofit: etrofit = Builder()
-            .baseUrl("https://trackapi.nutritionix.com/v2/natural/exercise/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        nutritionDAO = retrofit.create(INutritionDAO.class);
-    }
-
-    List<String> getTopContributors(String userName) throws IOException {
-        List<ExerciseDTO> exercise = nutritionDAO
-    }
-
-     */
 }

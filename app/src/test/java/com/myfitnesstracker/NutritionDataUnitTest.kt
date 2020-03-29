@@ -37,7 +37,7 @@ class NutritionDataUnitTest {
 
     private fun thenResultContainsPhoNutritionInfo() {
         var phoFound = false;
-        mvm.Nutrition.observeForever {
+        mvm.nutrition.observeForever { it ->
             // here is the observing
 
             assertNotNull(it)

@@ -15,7 +15,7 @@ class FitnessDataUnitTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
     lateinit var mvm: MainViewModel
-/*
+
 
     @Test
     fun confirmRun_outputsRun() {
@@ -37,16 +37,15 @@ class FitnessDataUnitTest {
 
     private fun thenResultsContainRunExerciseInfo() {
         var runFound = false;
-        mvm.exercise.observeForever {
+        mvm.exercises.observeForever { it ->
             // here is the observing
             assertNotNull(it)
             assertTrue(it.size > 0)
             it.forEach {
-                if (it.time == "20 minutes" && it.calories == "123")
+                if (it.duration_min == "20" && it.nf_calories == "229")
                     runFound = true
             }
         }
         assertTrue(runFound)
     }
-*/
 }
