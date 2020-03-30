@@ -4,7 +4,7 @@ import java.util.Scanner;
 // class if needed to convert metric to imperial and vice versa, still needs to be tested fully for no errors
 public class MetricImperialConverter {
 
-    public long readInput() {
+    public void readInput() {
         Scanner reader = new Scanner(System.in);
 
         if (reader.hasNextLong()) {
@@ -33,7 +33,6 @@ public class MetricImperialConverter {
             System.out.println("Invalid input");
         }
 
-        return;
     }
 
 
@@ -80,4 +79,4 @@ public class MetricImperialConverter {
         return mil * 0.0254;
     }
 }
-}
+

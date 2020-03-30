@@ -1,6 +1,7 @@
 package com.myfitnesstracker
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
 import com.myfitnesstracker.ui.main.MainViewModel
 import org.junit.Assert.*
 import org.junit.Rule
@@ -11,8 +12,9 @@ class NutritionDataUnitTest {
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
     lateinit var mvm: MainViewModel
-/*
+
 // alt + enter to auto create function
+
 
 
     @Test
@@ -24,19 +26,20 @@ class NutritionDataUnitTest {
 
 
     private fun givenAFeedOfNutritionDataAreAvailable() {
-        mvn = MainViewModel()
+        mvm = MainViewModel()
     }
 
 
     private fun whenSearchForPho() {
-        mvn.fetchNutritionInfo("pho")
+        mvm.fetchNutritionInfo("pho")
     }
 
 
     private fun thenResultContainsPhoNutritionInfo() {
         var phoFound = false;
-        mvn.nutrition.observeForever {
+        mvm.nutrition.observeForever { it ->
             // here is the observing
+
             assertNotNull(it)
             assertTrue(it.size > 0)
             it.forEach {
@@ -57,15 +60,19 @@ class NutritionDataUnitTest {
 
 
     private fun whenISearchForGarbage() {
-        mvn.fetchNutritionInfo("asfggagsdfjaiagg")
+        mvm.fetchNutritionInfo("asfggagsdfjaiagg")
     }
 
 
     private fun thenIGetZeroResults() {
-        mvn.nutrition.observeForever {
+        mvm.nutrition.observeForever {
             assertEquals( 0, it.size)
         }
     }
 
- */
+
+}
+
+private fun Any.observeForever(n: Any) {
+
 }

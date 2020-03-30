@@ -6,17 +6,32 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.storage.FirebaseStorage
+import com.myfitnesstracker.dto.ExerciseDTO
+import com.myfitnesstracker.dto.Nutrition
+import com.myfitnesstracker.dto.NutritionSearchResultDTO
+import com.myfitnesstracker.service.ExerciseService
+import com.myfitnesstracker.service.NutritionSearchService
+import com.myfitnesstracker.service.NutritionService
 import com.myfitnesstracker.ui.dto.BMI
 
 class MainViewModel : ViewModel() {
 
    private var mainFragment: MainFragment = MainFragment()
-   private lateinit var firestore : FirebaseFirestore
+   //private var storageReference = FirebaseStorage.getInstance().reference
    private var _bmis: MutableLiveData<ArrayList<BMI>> = MutableLiveData<ArrayList<BMI>>()
+   private var _exercises = MutableLiveData<ArrayList<ExerciseDTO>>()
+   private var _nutrition = MutableLiveData<ArrayList<Nutrition>>()
+   private var _nutritionSearch = MutableLiveData<ArrayList<NutritionSearchResultDTO>>()
+   private lateinit var firestore: FirebaseFirestore
+   var exerciseService: ExerciseService = ExerciseService()
+   var nutritionService: NutritionService = NutritionService()
+   var nutritionSearchResultService: NutritionSearchService = NutritionSearchService()
 
+   /*    Commenting out till error is fixed with Firebase
    init {
-       firestore = FirebaseFirestore.getInstance()
-       firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+      firestore = FirebaseFirestore.getInstance()
+      firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
       listenToBMI()
    }
 
@@ -45,7 +60,7 @@ class MainViewModel : ViewModel() {
       val document = firestore.collection("BMI").document()
          bmi.bmiId = document.id
          val set = document.set(bmi)
-         .addOnSuccessListener {
+         set.addOnSuccessListener {
             Log.d("Firebase", "Calculation Succeeded")
          }
          .addOnFailureListener{
@@ -53,18 +68,50 @@ class MainViewModel : ViewModel() {
          }
    }
 
+    */
+
+   init {
+      fetchNutritionSearchResults("pho")
+   }
+
    internal var bmis:MutableLiveData<ArrayList<BMI>>
       get() {return _bmis}
       set(value) {_bmis = value}
 
-/*
-    //var userBMI = mainFragment.calculateBMI()
-    fun fetchUserBMI(bmi: Double){
 
+    //var userBMI = mainFragment.calculateBMI()
+    fun saveBMI(bmi: String){
+       var calculatedbmi = mainFragment.saveBMI(bmi)
     }
-*/
+
     fun fetchUserInputBMI(weight: Double, height: Double) {
       var userInputBMI = mainFragment.fetchUserInputBMI(weight, height)
    }
+
+
+   fun fetchExerciseInfo(exerciseName:String) {
+      _exercises = exerciseService.fetchExercise(exerciseName)
+   }
+
+   fun fetchNutritionSearchResults(nutritionSearch:String){
+      _nutritionSearch = nutritionSearchResultService.fetchNutritionSearchResults(nutritionSearch)
+   }
+
+   fun fetchNutritionInfo(nutritionID:String){
+      _nutrition = nutritionService.fetch(nutritionID)
+   }
+
+   var exercises:MutableLiveData<ArrayList<ExerciseDTO>>
+      get() { return _exercises}
+      set(value) {_exercises = value}
+
+   var nutritionSearch:MutableLiveData<ArrayList<NutritionSearchResultDTO>>
+      get() {return _nutritionSearch}
+      set(value) {_nutritionSearch = value}
+
+   var nutrition:MutableLiveData<ArrayList<Nutrition>>
+      get() { return _nutrition}
+      set(value) {_nutrition = value}
+
 }
 
