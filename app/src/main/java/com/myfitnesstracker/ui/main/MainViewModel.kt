@@ -17,16 +17,16 @@ import com.myfitnesstracker.ui.dto.BMI
 
 class MainViewModel : ViewModel() {
 
-   private var mainFragment: MainFragment = MainFragment()
+   private var mainFragment : MainFragment = MainFragment()
    //private var storageReference = FirebaseStorage.getInstance().reference
-   private var _bmis: MutableLiveData<ArrayList<BMI>> = MutableLiveData<ArrayList<BMI>>()
+   private var _bmis : MutableLiveData<ArrayList<BMI>> = MutableLiveData<ArrayList<BMI>>()
    private var _exercises = MutableLiveData<ArrayList<ExerciseDTO>>()
    private var _nutrition = MutableLiveData<ArrayList<Nutrition>>()
    private var _nutritionSearch = MutableLiveData<ArrayList<NutritionSearchResultDTO>>()
-   private lateinit var firestore: FirebaseFirestore
-   var exerciseService: ExerciseService = ExerciseService()
-   var nutritionService: NutritionService = NutritionService()
-   var nutritionSearchResultService: NutritionSearchService = NutritionSearchService()
+   private lateinit var firestore : FirebaseFirestore
+   private var exerciseService : ExerciseService = ExerciseService()
+   private var nutritionService : NutritionService = NutritionService()
+   private var nutritionSearchResultService : NutritionSearchService = NutritionSearchService()
 
    /*    Commenting out till error is fixed with Firebase
    init {
@@ -74,42 +74,42 @@ class MainViewModel : ViewModel() {
       fetchNutritionSearchResults("pho")
    }
 
-   internal var bmis:MutableLiveData<ArrayList<BMI>>
+   internal var bmis : MutableLiveData<ArrayList<BMI>>
       get() {return _bmis}
       set(value) {_bmis = value}
 
 
     //var userBMI = mainFragment.calculateBMI()
-    fun saveBMI(bmi: String){
+    fun saveBMI(bmi : String){
        var calculatedbmi = mainFragment.saveBMI(bmi)
     }
 
-    fun fetchUserInputBMI(weight: Double, height: Double) {
+    fun fetchUserInputBMI(weight : Double, height: Double) {
       var userInputBMI = mainFragment.fetchUserInputBMI(weight, height)
    }
 
 
-   fun fetchExerciseInfo(exerciseName:String) {
+   fun fetchExerciseInfo(exerciseName : String) {
       _exercises = exerciseService.fetchExercise(exerciseName)
    }
 
-   fun fetchNutritionSearchResults(nutritionSearch:String){
+   fun fetchNutritionSearchResults(nutritionSearch : String){
       _nutritionSearch = nutritionSearchResultService.fetchNutritionSearchResults(nutritionSearch)
    }
 
-   fun fetchNutritionInfo(nutritionID:String){
+   fun fetchNutritionInfo(nutritionID : String){
       _nutrition = nutritionService.fetch(nutritionID)
    }
 
-   var exercises:MutableLiveData<ArrayList<ExerciseDTO>>
+   var exercises : MutableLiveData<ArrayList<ExerciseDTO>>
       get() { return _exercises}
       set(value) {_exercises = value}
 
-   var nutritionSearch:MutableLiveData<ArrayList<NutritionSearchResultDTO>>
+   var nutritionSearch : MutableLiveData<ArrayList<NutritionSearchResultDTO>>
       get() {return _nutritionSearch}
       set(value) {_nutritionSearch = value}
 
-   var nutrition:MutableLiveData<ArrayList<Nutrition>>
+   var nutrition : MutableLiveData<ArrayList<Nutrition>>
       get() { return _nutrition}
       set(value) {_nutrition = value}
 
