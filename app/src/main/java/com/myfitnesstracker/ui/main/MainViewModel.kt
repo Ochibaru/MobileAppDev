@@ -24,9 +24,9 @@ class MainViewModel : ViewModel() {
    private var _nutrition = MutableLiveData<ArrayList<Nutrition>>()
    private var _nutritionSearch = MutableLiveData<ArrayList<NutritionSearchResultDTO>>()
    private lateinit var firestore : FirebaseFirestore
-   var exerciseService : ExerciseService = ExerciseService()
-   var nutritionService : NutritionService = NutritionService()
-   var nutritionSearchResultService : NutritionSearchService = NutritionSearchService()
+   private var exerciseService : ExerciseService = ExerciseService()
+   private var nutritionService : NutritionService = NutritionService()
+   private var nutritionSearchResultService : NutritionSearchService = NutritionSearchService()
 
    /*    Commenting out till error is fixed with Firebase
    init {
