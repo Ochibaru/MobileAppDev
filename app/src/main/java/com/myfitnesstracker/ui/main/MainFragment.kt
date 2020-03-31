@@ -46,11 +46,12 @@ class MainFragment : Fragment() {
     }
 
     fun saveBMI(bmi: String): String {
-           var weight = txtWeight.text.toString().toDouble()
-           var height = txtHeight.text.toString().toDouble()
-           var bmi = (weight / (height * height)) * 703
 
-            return "$bmi"
+        var weight = txtWeight.text.toString().toDouble()
+        var height = txtHeight.text.toString().toDouble()
+        var bmi = (weight / (height * height)) * 703
+
+        return "$bmi"
     }
 
     fun fetchUserInputBMI(weight: Double, height: Double): String {
