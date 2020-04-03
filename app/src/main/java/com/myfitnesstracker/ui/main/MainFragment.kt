@@ -1,5 +1,6 @@
 package com.myfitnesstracker.ui.main
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import com.myfitnesstracker.R
 import kotlinx.android.synthetic.main.main_fragment.*
 import android.widget.ArrayAdapter
+import android.widget.Button
 import androidx.lifecycle.Observer
 import com.myfitnesstracker.ui.dto.BMI
 
@@ -22,6 +24,18 @@ class MainFragment : Fragment() {
     ): View {
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        activityBMI.setOnClickListener{
+            activity?.let{
+                val intent = Intent (it, MainViewModel::class.java)
+                it.startActivity(intent)
+            }
+        }
+    }
+
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
