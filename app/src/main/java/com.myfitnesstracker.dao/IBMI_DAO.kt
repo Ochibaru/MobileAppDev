@@ -1,0 +1,2 @@
+interface IBMI_DAO {
+}
