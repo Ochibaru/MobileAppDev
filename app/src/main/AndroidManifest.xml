@@ -19,10 +19,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".BMIActivity"
-            android:label="@string/title_activity_b_m_i"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,10 +26,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SecondaryActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.SECONDARY" />
-            </intent-filter>
+        <activity android:name=".BMIActivity">
+        </activity>
+        <activity android:name=".WeightDiaryActivity">
+        </activity>
+        <activity android:name=".ExerciseActivity">
+        </activity>
+        <activity android:name=".NutritionActivity">
+        </activity>
+        <activity android:name=".TodaysOverviewActivity">
         </activity>
 
         <provider

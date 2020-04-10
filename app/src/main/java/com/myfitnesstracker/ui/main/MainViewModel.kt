@@ -2,18 +2,21 @@ package com.myfitnesstracker.ui.main
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.beust.klaxon.Klaxon
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.storage.FirebaseStorage
-import com.myfitnesstracker.dto.ExerciseDTO
-import com.myfitnesstracker.dto.Nutrition
-import com.myfitnesstracker.dto.NutritionSearchResultDTO
+import com.myfitnesstracker.dto.*
 import com.myfitnesstracker.service.ExerciseService
+import com.myfitnesstracker.service.NutritionComplexSearchService
 import com.myfitnesstracker.service.NutritionSearchService
 import com.myfitnesstracker.service.NutritionService
 import com.myfitnesstracker.ui.dto.BMI
+import com.myfitnesstracker.viewmodel.ComplexSearchRepository
+import java.io.StringReader
 
 class MainViewModel : ViewModel() {
 
@@ -23,10 +26,13 @@ class MainViewModel : ViewModel() {
    private var _exercises = MutableLiveData<ArrayList<ExerciseDTO>>()
    private var _nutrition = MutableLiveData<ArrayList<Nutrition>>()
    private var _nutritionSearch = MutableLiveData<ArrayList<NutritionSearchResultDTO>>()
+   private var _complex = MutableLiveData<ArrayList<NutritionSearchResultDTO>>()
    private lateinit var firestore: FirebaseFirestore
    var exerciseService: ExerciseService = ExerciseService()
    var nutritionService: NutritionService = NutritionService()
    var nutritionSearchResultService: NutritionSearchService = NutritionSearchService()
+   var nutritionComplexSearchService: NutritionComplexSearchService = NutritionComplexSearchService()
+
 
    /*    Commenting out till error is fixed with Firebase
    init {
@@ -71,8 +77,12 @@ class MainViewModel : ViewModel() {
     */
 
    init {
-      fetchNutritionSearchResults("pho")
+      // fetchNutritionSearchResults("pho")
    }
+
+
+   //val result = Klaxon().parse<>
+
 
    internal var bmis:MutableLiveData<ArrayList<BMI>>
       get() {return _bmis}
@@ -112,6 +122,25 @@ class MainViewModel : ViewModel() {
    var nutrition:MutableLiveData<ArrayList<Nutrition>>
       get() { return _nutrition}
       set(value) {_nutrition = value}
+
+   var complex:MutableLiveData<ArrayList<NutritionSearchResultDTO>>
+      get() { return _complex}
+      set(value) {_complex = value}
+
+
+   var foodSearchTerm = "pho"
+   val complexSearchRepository = ComplexSearchRepository()
+   val complexSearch: LiveData<ComplexSearchResult> get() = complexSearchRepository.getMutableLiveData(foodSearchTerm)
+   override fun onCleared() {
+      super.onCleared()
+      complexSearchRepository.completableJob.cancel()
+   }
+
+/*   fun fetchComplexSearchResults(foodSearchTerm:String): List<ComplexSearch>? {
+      return complexSearch.value
+   }
+
+ */
 
 }
 

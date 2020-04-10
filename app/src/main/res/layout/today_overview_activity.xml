@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TodaysOverviewActivity">
+
+
+    <ImageView
+        android:id="@+id/bggradient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/bggradient_bmi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.myfitnesstracker.ui.scripts.ProportionalImageView
+        android:id="@+id/bgmaincontrols_bmi"
+        android:layout_width="330dp"
+        android:layout_height="91dp"
+        android:layout_marginLeft="42.5dp"
+        android:layout_marginBottom="2dp"
+        android:src="@drawable/bgmaincontrols_bmi"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.myfitnesstracker.ui.scripts.ProportionalImageView
+        android:id="@+id/bgSelectedButton"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="175dp"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/bgselectedbutton_bmi"
+        app:layout_constraintBottom_toBottomOf="@+id/bgmaincontrols_bmi"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.myfitnesstracker.ui.scripts.ProportionalImageButton
+        android:id="@+id/btnWeightDiary"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#00FFFFFF"
+        android:onClick="viewWeightDiaryActivity"
+        android:scaleX="1.50"
+        android:scaleY="1.50"
+        android:src="@drawable/btnweightdiary_bmi"
+        app:layout_constraintStart_toStartOf="@id/bgmaincontrols_bmi"
+        app:layout_constraintTop_toTopOf="@id/bgmaincontrols_bmi" />
+
+    <com.myfitnesstracker.ui.scripts.ProportionalImageButton
+        android:id="@+id/btnTodaysOverview"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#00FFFFFF"
+        android:onClick="viewTodaysOverviewActivity"
+        android:scaleX="1.50"
+        android:scaleY="1.50"
+        android:src="@drawable/btntodaysoverview_bmi"
+        app:layout_constraintStart_toStartOf="@id/btnWeightDiary"
+        app:layout_constraintTop_toTopOf="@id/bgmaincontrols_bmi" />
+
+    <com.myfitnesstracker.ui.scripts.ProportionalImageButton
+        android:id="@+id/btnAddExercise"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="64dp"
+        android:backgroundTint="#00FFFFFF"
+        android:onClick="viewExerciseActivity"
+        android:scaleX="1.50"
+        android:scaleY="1.50"
+        android:src="@drawable/btnaddexercise_bmi"
+        app:layout_constraintEnd_toEndOf="@id/btnAddNutrition"
+        app:layout_constraintTop_toTopOf="@id/bgmaincontrols_bmi" />
+
+    <com.myfitnesstracker.ui.scripts.ProportionalImageButton
+        android:id="@+id/btnAddNutrition"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#00FFFFFF"
+        android:onClick="viewNutritionActivity"
+        android:scaleX="1.3"
+        android:scaleY="1.3"
+        android:src="@drawable/btnnutrition_bmi"
+        app:layout_constraintEnd_toEndOf="@id/bgmaincontrols_bmi"
+        app:layout_constraintTop_toTopOf="@id/bgmaincontrols_bmi" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="100dp"
+        android:fontFamily="sans-serif"
+        android:text="EATEN"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lblEaten"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="45dp"
+        android:fontFamily="sans-serif"
+        android:text="750"
+        android:textColor="#FFFFFF"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="200dp"
+        android:fontFamily="sans-serif"
+        android:text="BURNED"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lblBurned"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="145dp"
+        android:fontFamily="sans-serif"
+        android:text="750"
+        android:textColor="#FFFFFF"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="300dp"
+        android:fontFamily="sans-serif"
+        android:text="CARBS"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lblCarbs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="245dp"
+        android:fontFamily="sans-serif"
+        android:text="750g"
+        android:textColor="#FFFFFF"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="400dp"
+        android:fontFamily="sans-serif"
+        android:text="PROTEIN"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lblProtein"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="345dp"
+        android:fontFamily="sans-serif"
+        android:text="750g"
+        android:textColor="#FFFFFF"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="500dp"
+        android:fontFamily="sans-serif"
+        android:text="FATS"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lblFats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="445dp"
+        android:fontFamily="sans-serif"
+        android:text="750g"
+        android:textColor="#FFFFFF"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

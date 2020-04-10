@@ -1,18 +1,24 @@
-package com.myfitnesstracker;
+package com.myfitnesstracker.ui.scripts;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 @SuppressLint("AppCompatCustomView")
-public class ProportionalImageButton extends ImageButton {
-    public ProportionalImageButton(Context context) {
+public class ProportionalImageView extends ImageView {
+    public ProportionalImageView(Context context) {
         super(context);
     }
-    public ProportionalImageButton(Context context, AttributeSet attrs) {
+
+    public ProportionalImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    public ProportionalImageView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
     }
 
     @Override
@@ -26,3 +32,4 @@ public class ProportionalImageButton extends ImageButton {
         else super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 }
+

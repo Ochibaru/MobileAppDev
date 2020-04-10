@@ -23,6 +23,7 @@ public class NetworkDAO {
 
         try (Response response = client.newCall(request).execute()){
 
+            assert response.body() != null;
             responseBody = response.body().string();
 
         }

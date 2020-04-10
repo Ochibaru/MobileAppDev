@@ -1,12 +1,13 @@
 package com.myfitnesstracker.service
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.myfitnesstracker.RetrofitClientInstance
 import com.myfitnesstracker.dao.INutritionSearchResultDAO
 import com.myfitnesstracker.dto.NutritionSearchResultDTO
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.myfitnesstracker.RetrofitClientInstance
 
 class NutritionSearchService {
 
@@ -29,6 +30,19 @@ class NutritionSearchService {
             }
 
         })
+        Log.d("test", "Results: " + _nutritionSearch)
+
         return _nutritionSearch
     }
+
+    //var parsedNutritionSearchResults : MutableLiveData<ArrayList<NutritionSearchResultDTO>> = TODO()
+
+    internal fun fetchNutritionSearchResults(filepath: String, usingFilepath: String) : MutableLiveData<ArrayList<NutritionSearchResultDTO>> {
+        var _nutritionSearch = MutableLiveData<ArrayList<NutritionSearchResultDTO>>()
+
+
+
+        return _nutritionSearch
+    }
+
 }

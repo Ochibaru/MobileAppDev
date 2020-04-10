@@ -1,18 +1,24 @@
 package com.myfitnesstracker.ui.main
 
 import android.content.Intent
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.myfitnesstracker.R
-import kotlinx.android.synthetic.main.main_fragment.*
 import android.widget.ArrayAdapter
-import android.widget.Button
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.beust.klaxon.Klaxon
+import com.beust.klaxon.PathMatcher
+import com.myfitnesstracker.BMIActivity
+import com.myfitnesstracker.R
+import com.myfitnesstracker.dto.ComplexSearch
+import com.myfitnesstracker.dto.ComplexSearchResult
 import com.myfitnesstracker.ui.dto.BMI
+import kotlinx.android.synthetic.main.main_fragment.*
+import java.io.StringReader
+import java.util.regex.Pattern
 
 class MainFragment : Fragment() {
 
@@ -27,12 +33,15 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        /*
         activityBMI.setOnClickListener{
             activity?.let{
                 val intent = Intent (it, MainViewModel::class.java)
                 it.startActivity(intent)
             }
         }
+
+         */
     }
 
 
@@ -47,6 +56,54 @@ class MainFragment : Fragment() {
         btnCalculate.setOnClickListener{
             saveWeightHeight()
         }
+
+        fun getComplexResults(){
+            viewModel!!.complexSearch.observe(this, Observer {
+                val pathMatcher = object : PathMatcher {
+                    override fun pathMatches(path: String)
+                            = Pattern.matches(".*results.*.*title.*", path)
+                    override fun onMatch(path: String, value: Any) {
+                        txtTest.text = "$value"
+                    }
+                }
+                Klaxon()
+                    .pathMatcher(pathMatcher)
+                    .parseJsonObject(it)
+            })
+        }
+
+
+        viewModel.complexSearch.observe(viewLifecycleOwner, Observer {
+            complexSearch -> spnTest.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, complexSearch))
+        })
+        btnTest.setOnClickListener {
+            //txtTest.text = viewModel.fetchComplexSearchResults("pho").toString()
+
+            var testCall = viewModel.fetchComplexSearchResults("pho").toString()
+            //jsonTestParse()
+            val result = Klaxon().parse<ComplexSearchResult>(testCall)
+            txtTest.text = result?.title
+        }
+        btnSwitch.setOnClickListener {
+            val intent = Intent()
+            intent.setClass(activity!!, BMIActivity::class.java)
+            activity!!.startActivity(intent)
+        }
+    }
+
+    private fun testTesting(test:String){
+
+        var test = viewModel.fetchComplexSearchResults("pho")
+    }
+
+    fun jsonTestParse(){
+        val jsonTest: String = "{\"results\":[{\"id\":275468,\"title\":\"Pho\",\"image\":\"https://spoonacular.com/recipeImages/275468-312x231.jpg\",\"imageType\":\"jpg\"}],\"offset\":0,\"number\":1,\"totalResults\":96}"
+
+        val klaxon = Klaxon()
+        val parsed = klaxon.parseJsonObject(StringReader(jsonTest))
+        val dataArray = parsed.array<Any>("results")
+        val results = dataArray?.let { klaxon.parseFromJsonArray<ComplexSearchResult>(it) }
+        println(results)
     }
 
     private fun saveWeightHeight() {

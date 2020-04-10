@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BMIActivity">
+
+
+        <ImageView
+            android:id="@+id/bggradient"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="100dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/bggradient_bmi"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="51dp"
+            android:layout_height="33dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif"
+            android:text="BMI"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="87dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
+        android:text="Calculator"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+        <com.myfitnesstracker.ui.scripts.ProportionalImageButton
+            android:id="@+id/btnMale"
+            android:layout_width="144dp"
+            android:layout_height="144dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="78dp"
+            android:background="@drawable/frame"
+            android:backgroundTint="#1472909D"
+            android:src="@drawable/btnmale_bmi"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <com.myfitnesstracker.ui.scripts.ProportionalImageButton
+        android:id="@+id/btnFemale"
+        android:layout_width="144dp"
+        android:layout_height="144dp"
+        android:layout_marginStart="215dp"
+        android:layout_marginTop="78dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/frame"
+        android:backgroundTint="#1472909D"
+        android:src="@drawable/btnfemale_bmi"
+        app:layout_constraintBottom_toTopOf="@+id/bgheightbutton"
+        app:layout_constraintStart_toStartOf="@id/btnMale"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/bgheightbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:scaleType="fitXY"
+        android:scaleX=".85"
+        android:scaleY=".85"
+        android:src="@drawable/bgbmibutton_bmi"
+        app:layout_constraintStart_toStartOf="@id/btnFemale"
+        app:layout_constraintTop_toTopOf="@id/btnFemale" />
+
+        <EditText
+            android:id="@+id/txtHeight"
+            android:layout_width="75dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:fontFamily="sans-serif"
+            android:gravity="center_horizontal"
+            android:inputType="numberDecimal"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/btnFemale"
+            app:layout_constraintTop_toTopOf="@id/bgheightbutton" />
+
+        <ImageView
+            android:id="@+id/bgweightbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:scaleType="fitXY"
+            android:scaleX=".85"
+            android:scaleY=".85"
+            android:src="@drawable/bgbmibutton_bmi"
+            app:layout_constraintStart_toStartOf="@id/btnFemale"
+            app:layout_constraintTop_toTopOf="@id/bgheightbutton" />
+
+        <EditText
+            android:id="@+id/txtWeight"
+            android:layout_width="75dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:fontFamily="sans-serif"
+            android:gravity="center_horizontal"
+            android:inputType="numberDecimal"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/btnFemale"
+            app:layout_constraintTop_toTopOf="@id/bgweightbutton" />
+
+        <ImageView
+            android:id="@+id/bggoalbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:scaleType="fitXY"
+            android:scaleX=".85"
+            android:scaleY=".85"
+            android:src="@drawable/bgbmibutton_bmi"
+            app:layout_constraintStart_toStartOf="@id/btnFemale"
+            app:layout_constraintTop_toTopOf="@id/bgweightbutton" />
+
+        <EditText
+            android:id="@+id/txtGoal"
+            android:layout_width="75dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:fontFamily="sans-serif"
+            android:gravity="center_horizontal"
+            android:inputType="numberDecimal"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/btnFemale"
+            app:layout_constraintTop_toTopOf="@id/bggoalbutton" />
+
+        <ImageView
+            android:id="@+id/bgagebutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:scaleType="fitXY"
+            android:scaleX=".85"
+            android:scaleY=".85"
+            android:src="@drawable/bgbmibutton_bmi"
+            app:layout_constraintStart_toStartOf="@id/btnFemale"
+            app:layout_constraintTop_toTopOf="@id/bggoalbutton" />
+
+        <EditText
+            android:id="@+id/txtAge"
+            android:layout_width="75dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="12dp"
+            android:adjustViewBounds="true"
+            android:fontFamily="sans-serif"
+            android:gravity="center_horizontal"
+            android:inputType="numberDecimal"
+            android:text="0"
+            android:textColor="#FFFFFF"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/btnFemale"
+            app:layout_constraintTop_toTopOf="@id/bgagebutton" />
+
+        <Button
+            android:id="@+id/btnHeightCM"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="175dp"
+            android:backgroundTint="#00FFFFFF"
+            android:fontFamily="sans-serif"
+            android:text="cm"
+            android:textColor="#72909D"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/btnMale"
+            app:layout_constraintTop_toTopOf="@id/btnFemale" />
+
+        <Button
+            android:id="@+id/btnHeightFT"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="75dp"
+            android:layout_marginTop="175dp"
+            android:backgroundTint="#00FFFFFF"
+            android:fontFamily="sans-serif"
+            android:text="ft"
+            android:textColor="#72909D"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/btnMale"
+            app:layout_constraintTop_toTopOf="@id/btnFemale" />
+
+        <Button
+            android:id="@+id/btnWeightKG"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="65dp"
+            android:backgroundTint="#00FFFFFF"
+            android:fontFamily="sans-serif"
+            android:text="kg"
+            android:textColor="#72909D"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/btnMale"
+            app:layout_constraintTop_toTopOf="@id/btnHeightFT" />
+
+        <Button
+            android:id="@+id/btnWeightLB"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="75dp"
+            android:layout_marginTop="65dp"
+            android:backgroundTint="#00FFFFFF"
+            android:fontFamily="sans-serif"
+            android:text="lb"
+            android:textColor="#72909D"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/btnMale"
+            app:layout_constraintTop_toTopOf="@id/btnHeightFT" />
+
+        <TextView
+            android:id="@+id/lblGoal"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="85dp"
+            android:fontFamily="sans-serif"
+            android:text="goal"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/btnMale"
+            app:layout_constraintTop_toTopOf="@id/btnWeightLB" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="75dp"
+            android:fontFamily="sans-serif"
+            android:text="age"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/btnMale"
+            app:layout_constraintTop_toTopOf="@id/lblGoal" />
+
+
+    <com.myfitnesstracker.ui.scripts.ProportionalImageView
+        android:id="@+id/bgmaincontrols_bmi"
+        android:layout_width="330dp"
+        android:layout_height="91dp"
+        android:layout_marginLeft="42.5dp"
+        android:layout_marginBottom="2dp"
+        android:src="@drawable/bgmaincontrols_bmi"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.myfitnesstracker.ui.scripts.ProportionalImageView
+        android:id="@+id/bgSelectedButton"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_marginStart="175dp"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/bgselectedbutton_bmi"
+        app:layout_constraintBottom_toBottomOf="@+id/bgmaincontrols_bmi"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.myfitnesstracker.ui.scripts.ProportionalImageButton
+        android:id="@+id/btnWeightDiary"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#00FFFFFF"
+        android:onClick="viewWeightDiaryActivity"
+        android:scaleX="1.50"
+        android:scaleY="1.50"
+        android:src="@drawable/btnweightdiary_bmi"
+        app:layout_constraintStart_toStartOf="@id/bgmaincontrols_bmi"
+        app:layout_constraintTop_toTopOf="@id/bgmaincontrols_bmi" />
+
+    <com.myfitnesstracker.ui.scripts.ProportionalImageButton
+        android:id="@+id/btnTodaysOverview"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#00FFFFFF"
+        android:onClick="viewTodaysOverviewActivity"
+        android:scaleX="1.50"
+        android:scaleY="1.50"
+        android:src="@drawable/btntodaysoverview_bmi"
+        app:layout_constraintStart_toStartOf="@id/btnWeightDiary"
+        app:layout_constraintTop_toTopOf="@id/bgmaincontrols_bmi" />
+
+    <com.myfitnesstracker.ui.scripts.ProportionalImageButton
+        android:id="@+id/btnAddExercise"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="64dp"
+        android:backgroundTint="#00FFFFFF"
+        android:onClick="viewExerciseActivity"
+        android:scaleX="1.50"
+        android:scaleY="1.50"
+        android:src="@drawable/btnaddexercise_bmi"
+        app:layout_constraintEnd_toEndOf="@id/btnAddNutrition"
+        app:layout_constraintTop_toTopOf="@id/bgmaincontrols_bmi" />
+
+    <com.myfitnesstracker.ui.scripts.ProportionalImageButton
+        android:id="@+id/btnAddNutrition"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#00FFFFFF"
+        android:onClick="viewNutritionActivity"
+        android:scaleX="1.3"
+        android:scaleY="1.3"
+        android:src="@drawable/btnnutrition_bmi"
+        app:layout_constraintEnd_toEndOf="@id/bgmaincontrols_bmi"
+        app:layout_constraintTop_toTopOf="@id/bgmaincontrols_bmi" />
+
+    <ImageButton
+        android:id="@+id/btnCalculateBMI"
+        android:layout_width="256dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="70dp"
+        android:background="#00FFFFFF"
+        android:src="@drawable/btncalculatebmi_bmi"
+        app:layout_constraintBottom_toBottomOf="@+id/bggradient"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
