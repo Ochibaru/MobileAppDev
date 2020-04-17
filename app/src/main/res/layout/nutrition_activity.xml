@@ -79,6 +79,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:context=".NutritionActivity"
+        android:onClick="animate"
+        android:layout_marginStart="215dp"
+        android:layout_marginTop="275dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <ImageView
+            android:id="@+id/search"
+            android:layout_gravity="center"
+            android:layout_width="150dp"
+            android:layout_height="24dp"
+            android:src="@drawable/search_bar"
+            android:contentDescription="@string/path_search" />
+
+        <EditText
+            android:onClick="animate"
+            android:id="@+id/text"
+            android:layout_width="150dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:textSize="12sp"
+            android:textColor="?android:colorAccent"
+            android:alpha="0"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            tools:ignore="LabelFor" />
+
+    </FrameLayout>
+
+
     <ImageView
         android:layout_width="111dp"
         android:layout_height="114dp"

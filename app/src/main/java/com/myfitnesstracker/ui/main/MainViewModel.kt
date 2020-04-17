@@ -5,18 +5,15 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.beust.klaxon.Klaxon
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
-import com.google.firebase.storage.FirebaseStorage
 import com.myfitnesstracker.dto.*
 import com.myfitnesstracker.service.ExerciseService
-import com.myfitnesstracker.service.NutritionComplexSearchService
 import com.myfitnesstracker.service.NutritionSearchService
 import com.myfitnesstracker.service.NutritionService
 import com.myfitnesstracker.ui.dto.BMI
-import com.myfitnesstracker.viewmodel.ComplexSearchRepository
-import java.io.StringReader
+import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
@@ -24,17 +21,16 @@ class MainViewModel : ViewModel() {
    //private var storageReference = FirebaseStorage.getInstance().reference
    private var _bmis: MutableLiveData<ArrayList<BMI>> = MutableLiveData<ArrayList<BMI>>()
    private var _exercises = MutableLiveData<ArrayList<ExerciseDTO>>()
-   private var _nutrition = MutableLiveData<ArrayList<Nutrition>>()
+   private lateinit var _nutrition : String
    private var _nutritionSearch = MutableLiveData<ArrayList<NutritionSearchResultDTO>>()
    private var _complex = MutableLiveData<ArrayList<NutritionSearchResultDTO>>()
    private lateinit var firestore: FirebaseFirestore
    var exerciseService: ExerciseService = ExerciseService()
-   var nutritionService: NutritionService = NutritionService()
+
    var nutritionSearchResultService: NutritionSearchService = NutritionSearchService()
-   var nutritionComplexSearchService: NutritionComplexSearchService = NutritionComplexSearchService()
 
 
-   /*    Commenting out till error is fixed with Firebase
+
    init {
       firestore = FirebaseFirestore.getInstance()
       firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
@@ -74,12 +70,18 @@ class MainViewModel : ViewModel() {
          }
    }
 
-    */
+    fun saveComplex(complexSearch: ComplexSearchResult){
 
-   init {
-      // fetchNutritionSearchResults("pho")
-   }
-
+        val document = firestore.collection("Complex").document()
+        complexSearch.id = document.id
+        val set = document.set(complexSearch)
+        set.addOnSuccessListener {
+            Log.d("FirebaseComplex", "Saved to Complex")
+        }
+            .addOnFailureListener{
+                Log.d("FirebaseComplex","Failed to save Complex")
+            }
+    }
 
    //val result = Klaxon().parse<>
 
@@ -108,7 +110,9 @@ class MainViewModel : ViewModel() {
    }
 
    fun fetchNutritionInfo(nutritionID:String){
-      _nutrition = nutritionService.fetch(nutritionID)
+
+         _nutrition = NutritionService.doComplexSearch(nutritionID)
+         //NutritionService.doComplexSearch(nutritionID)
    }
 
    var exercises:MutableLiveData<ArrayList<ExerciseDTO>>
@@ -119,7 +123,7 @@ class MainViewModel : ViewModel() {
       get() {return _nutritionSearch}
       set(value) {_nutritionSearch = value}
 
-   var nutrition:MutableLiveData<ArrayList<Nutrition>>
+   var nutrition:String
       get() { return _nutrition}
       set(value) {_nutrition = value}
 
@@ -127,20 +131,6 @@ class MainViewModel : ViewModel() {
       get() { return _complex}
       set(value) {_complex = value}
 
-
-   var foodSearchTerm = "pho"
-   val complexSearchRepository = ComplexSearchRepository()
-   val complexSearch: LiveData<ComplexSearchResult> get() = complexSearchRepository.getMutableLiveData(foodSearchTerm)
-   override fun onCleared() {
-      super.onCleared()
-      complexSearchRepository.completableJob.cancel()
-   }
-
-/*   fun fetchComplexSearchResults(foodSearchTerm:String): List<ComplexSearch>? {
-      return complexSearch.value
-   }
-
- */
 
 }
 

@@ -12,7 +12,7 @@ import com.myfitnesstracker.ui.main.MainFragment
 import com.myfitnesstracker.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.main_fragment.*
 
-open class MainActivity : AppCompatActivity() {
+open class  MainActivity : AppCompatActivity() {
 
     //private EditText feet;
     var mainViewModel: MainViewModel? = null

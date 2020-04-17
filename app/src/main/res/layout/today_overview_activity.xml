@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TodaysOverviewActivity">
+    tools:context=".TodaysOverviewActivity"
+    tools:showIn="@layout/activity_main">
 
 
     <ImageView
@@ -204,7 +205,7 @@
         android:layout_marginStart="45dp"
         android:layout_marginTop="500dp"
         android:fontFamily="sans-serif"
-        android:text="FATS"
+        android:text="@string/fats"
         android:textColor="#FFFFFF"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -224,6 +225,114 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/appbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- Toolbar -->
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        style="@style/Widget.MaterialSheetFab.ToolBar" />
+
+                    <!-- Tabs -->
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabs"
+                        style="@style/Widget.MaterialSheetFab.TabLayout" />
+                </com.google.android.material.appbar.AppBarLayout>
+
+                <!-- View pager -->
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/appbar"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+            <!-- Your FAB implementation -->
+            <com.myfitnesstracker.ui.scripts.Fab
+                android:id="@+id/fab"
+                style="@style/Widget.MaterialSheetFab.Fab"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true" />
+
+            <!-- Overlay that dims the screen -->
+            <com.gordonwong.materialsheetfab.DimOverlayFrameLayout
+                android:id="@+id/overlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <!-- Circular reveal container for the sheet -->
+            <io.codetail.widget.RevealLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end|bottom"
+                android:orientation="vertical">
+
+                <!-- Sheet that contains your items -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fab_sheet"
+                    style="@style/Widget.MaterialSheetFab.Sheet">
+
+                    <!-- Sheet items -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Food -->
+                        <TextView
+                            android:id="@+id/fab_sheet_item_food"
+                            style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
+                            android:drawableLeft="@drawable/btnnutrition_bmi"
+                            android:drawableStart="@drawable/btnnutrition_bmi"
+                            android:text="@string/food" />
+
+                        <!-- Exercise -->
+                        <TextView
+                            android:id="@+id/fab_sheet_item_exercise"
+                            style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
+                            android:drawableLeft="@drawable/btnaddexercise_bmi"
+                            android:drawableStart="@drawable/btnaddexercise_bmi"
+                            android:text="@string/exercise" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+            </io.codetail.widget.RevealLinearLayout>
+
+            <!-- Snackbar -->
+            <LinearLayout
+                android:id="@+id/snackbar"
+                style="@style/Widget.MaterialSheetFab.Snackbar"
+                android:layout_alignParentBottom="true">
+
+                <TextView
+                    style="@style/TextAppearance.MaterialSheetFab.Snackbar.Message"
+                    android:text="@string/snackbar_shared_msg" />
+
+                <TextView
+                    style="@style/TextAppearance.MaterialSheetFab.Snackbar.Action"
+                    android:text="@string/view" />
+            </LinearLayout>
+        </RelativeLayout>
+
+
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

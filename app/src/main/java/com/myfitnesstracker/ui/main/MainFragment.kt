@@ -2,6 +2,7 @@ package com.myfitnesstracker.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,18 +10,21 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.beust.klaxon.Klaxon
-import com.beust.klaxon.PathMatcher
+import com.firebase.ui.auth.AuthUI
+import com.google.gson.GsonBuilder
 import com.myfitnesstracker.BMIActivity
 import com.myfitnesstracker.R
-import com.myfitnesstracker.dto.ComplexSearch
 import com.myfitnesstracker.dto.ComplexSearchResult
+import com.myfitnesstracker.service.GetItemDetailsDeserializer
 import com.myfitnesstracker.ui.dto.BMI
 import kotlinx.android.synthetic.main.main_fragment.*
-import java.io.StringReader
-import java.util.regex.Pattern
+
 
 class MainFragment : Fragment() {
+
+    private val AUTH_REQUEST_CODE = 2002
+
+
 
     private lateinit var viewModel: MainViewModel
 
@@ -30,21 +34,6 @@ class MainFragment : Fragment() {
     ): View {
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        /*
-        activityBMI.setOnClickListener{
-            activity?.let{
-                val intent = Intent (it, MainViewModel::class.java)
-                it.startActivity(intent)
-            }
-        }
-
-         */
-    }
-
-
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -57,32 +46,20 @@ class MainFragment : Fragment() {
             saveWeightHeight()
         }
 
-        fun getComplexResults(){
-            viewModel!!.complexSearch.observe(this, Observer {
-                val pathMatcher = object : PathMatcher {
-                    override fun pathMatches(path: String)
-                            = Pattern.matches(".*results.*.*title.*", path)
-                    override fun onMatch(path: String, value: Any) {
-                        txtTest.text = "$value"
-                    }
-                }
-                Klaxon()
-                    .pathMatcher(pathMatcher)
-                    .parseJsonObject(it)
-            })
-        }
-
-
-        viewModel.complexSearch.observe(viewLifecycleOwner, Observer {
-            complexSearch -> spnTest.setAdapter(ArrayAdapter(context!!, R.layout.support_simple_spinner_dropdown_item, complexSearch))
-        })
         btnTest.setOnClickListener {
             //txtTest.text = viewModel.fetchComplexSearchResults("pho").toString()
+            var test = viewModel.fetchNutritionInfo("pho")
 
-            var testCall = viewModel.fetchComplexSearchResults("pho").toString()
-            //jsonTestParse()
-            val result = Klaxon().parse<ComplexSearchResult>(testCall)
-            txtTest.text = result?.title
+            var complex : ComplexSearchResult
+            val gson = GsonBuilder()
+                .registerTypeAdapter(ComplexSearchResult::class.java, GetItemDetailsDeserializer())
+                .create()
+            //complex = gson.fromJson(test, ComplexSearchResult::class.java)
+            viewModel.nutrition
+            Log.d("DTO", "Info: $test" + "title: dun dun dun")
+            txtTest.text = viewModel.nutrition
+
+
         }
         btnSwitch.setOnClickListener {
             val intent = Intent()
@@ -91,20 +68,6 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun testTesting(test:String){
-
-        var test = viewModel.fetchComplexSearchResults("pho")
-    }
-
-    fun jsonTestParse(){
-        val jsonTest: String = "{\"results\":[{\"id\":275468,\"title\":\"Pho\",\"image\":\"https://spoonacular.com/recipeImages/275468-312x231.jpg\",\"imageType\":\"jpg\"}],\"offset\":0,\"number\":1,\"totalResults\":96}"
-
-        val klaxon = Klaxon()
-        val parsed = klaxon.parseJsonObject(StringReader(jsonTest))
-        val dataArray = parsed.array<Any>("results")
-        val results = dataArray?.let { klaxon.parseFromJsonArray<ComplexSearchResult>(it) }
-        println(results)
-    }
 
     private fun saveWeightHeight() {
         var bmi = BMI().apply {
@@ -113,7 +76,7 @@ class MainFragment : Fragment() {
             bmi = (weight / (height * height)) * 703
             txtBmi.text = bmi.toString()
         }
-        // viewModel.save(bmi)          Commenting out till error with firestore is fixed
+         viewModel.save(bmi)
     }
 
     fun saveBMI(bmi: String): String {
@@ -129,6 +92,16 @@ class MainFragment : Fragment() {
         var height = txtHeight.text.toString().toDouble()
 
         return "$weight $height"
+    }
+
+    private fun logon() {
+        var providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build(),
+            AuthUI.IdpConfig.GoogleBuilder().build()
+        )
+        startActivityForResult(
+            AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(), AUTH_REQUEST_CODE
+        )
     }
 
     companion object {

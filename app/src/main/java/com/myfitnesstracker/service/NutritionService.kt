@@ -1,50 +1,58 @@
 package com.myfitnesstracker.service
 
-import androidx.lifecycle.MutableLiveData
-import com.myfitnesstracker.dao.INutritionDAO
-import com.myfitnesstracker.dto.Nutrition
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import android.content.ClipData.Item
+import android.util.Log
 import com.myfitnesstracker.RetrofitClientInstance
-
-class NutritionService {
-    fun fetch(nutrition: String): MutableLiveData<ArrayList<Nutrition>> {
-        //initiating variable nutrition to ArrayList
-        var _nutrition = MutableLiveData<ArrayList<Nutrition>>()
-        //initiation a variable with retrofitInstance
-        val service = RetrofitClientInstance.retrofitInstance?.create(INutritionDAO::class.java)
-        val call = service?.getNutrition(nutrition)
-        //calling enqueue
-        call?.enqueue(object: Callback<ArrayList<Nutrition>> {
-            /*
-             * Invoked when a network exception occurred talking to the server or when an unexpected
-             * exception occurred creating the request or processing the response.
-             */
-            //overriding a function onFailure
-            override fun onFailure(call: Call<ArrayList<Nutrition>>, t: Throwable) {
-                val j = 1 + 1
-                val i = 1 + 1
-            }
+import com.myfitnesstracker.RetrofitClientInstance.getRetrofitInstance
+import com.myfitnesstracker.RetrofitInstance
+import com.myfitnesstracker.dao.IComplexSearchDAO
+import com.myfitnesstracker.dto.ComplexSearchResult
+import com.squareup.moshi.FromJson
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.JsonReader
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.withContext
+import retrofit2.*
+import java.io.IOException
 
 
-            /* Invoked for a received HTTP response.
-            *
-            *
-            * Note: An HTTP response may still indicate an application-level failure such as a 404 or 500.
-            * Call [Response.isSuccessful] to determine if the response indicates success.
-            */
-            //overriding a function onResponse
-            override fun onResponse(
-                call: Call<ArrayList<Nutrition>>,
-                response: Response<ArrayList<Nutrition>>
-            ) {
-                _nutrition.value = response.body()
-            }
+object NutritionService {
 
-        })
-        //returning the value
-        return _nutrition
+
+     fun doComplexSearch(foodItem: String): String {
+        /* val service = RetrofitClientInstance.retrofitInstance?.create(IComplexSearchDAO::class.java)
+        val call = service?.getComplexResults(foodItem)?.awaitResponse()
+        val resultsJsonResponse = call!!.body()
+        //var result = ComplexSearchResult()
+        //var listed: List<ComplexSearchResult>  = ArrayToListAdapter.fromJson
+var test: String = ""
+        test = resultsJsonResponse.toString()
+
+         */
+
+        var _search = ""
+            val iComplexSearchDAO: IComplexSearchDAO? =
+                RetrofitInstance.getRetrofitInstance()?.create()
+            val service = iComplexSearchDAO?.getComplexResults(foodItem)
+            service?.enqueue(object: Callback<Any>{
+                override fun onResponse(
+                    call: Call<Any>,
+                    response: Response<Any>
+                ){
+                    val test = response.body().toString()
+                    _search = test
+                    //val test = response.body()!!.title.toString()
+                    //_search = response.body()!!
+                    Log.d("ns", test)
+                    Log.d("tr", response.body().toString())
+                }
+
+                override fun onFailure(call: Call<Any>, t: Throwable) {
+                    print("Error at Retrofit thread enqueue in Nutrition Service.")
+                }
+            })
+         return _search
     }
 
 
