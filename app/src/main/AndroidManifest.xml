@@ -26,16 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BMIActivity">
-        </activity>
-        <activity android:name=".WeightDiaryActivity">
-        </activity>
-        <activity android:name=".ExerciseActivity">
-        </activity>
-        <activity android:name=".NutritionActivity">
-        </activity>
-        <activity android:name=".TodaysOverviewActivity">
-        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
