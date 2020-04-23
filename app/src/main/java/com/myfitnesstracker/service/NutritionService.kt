@@ -24,7 +24,7 @@ object NutritionService {
     *  Makes call to Spoonacular API and returns results to JSON objects.
     *  Results are than added to Firestore
     */
-     fun doComplexSearch(foodItem: String): ComplexSearchResult? {
+     fun doComplexSearch(foodItem: String, userEntry: String): ComplexSearchResult? {
         var _search: ComplexSearchResult? = null
             val iComplexSearchDAO: IComplexSearchDAO? =
                 RetrofitInstance.getRetrofitInstance()?.create()
@@ -98,8 +98,8 @@ object NutritionService {
                                 val current = LocalDateTime.now()
                                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
                                 val formatted = current.format(formatter)
-                                firestore.collection("Food").document("Date").collection(formatted).document(foodItem).set(nutrition)
-
+                                //firestore.collection("Food").document("User").collection(userEntry).document("Date").collection(formatted).document(foodItem).set(nutrition)
+                                firestore.collection("Login").document(userEntry).collection("Food").document("Date").collection(formatted).document(foodItem).set(nutrition)
                                 _searchNutrition = nutrition
                             }
 

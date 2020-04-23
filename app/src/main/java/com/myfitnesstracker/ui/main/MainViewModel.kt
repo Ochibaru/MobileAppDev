@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.myfitnesstracker.dto.*
 import com.myfitnesstracker.service.ExerciseService
@@ -21,6 +22,7 @@ class MainViewModel : ViewModel() {
    private var _exercises: Exercise = Exercise()
    private var _nutrition: ComplexSearchResult = ComplexSearchResult()
    var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+   private var userEmail: String
    var nutritionService: NutritionService = NutritionService
    var exerciseService: ExerciseService = ExerciseService
 
@@ -34,13 +36,15 @@ class MainViewModel : ViewModel() {
 
    init {
       firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+      userEmail = getUserProfile()
       listenToBMI()
       listenToNutrition()
       listenToExercise()
+
    }
 
    private fun listenToBMI() {
-      firestore.collection("BMI").addSnapshotListener{
+      firestore.collection("Login").document(userEmail).collection("BMI").addSnapshotListener{
          snapshot, e ->
          if (e != null){
             Log.w(TAG, LISTEN_FAIL, e)
@@ -61,14 +65,14 @@ class MainViewModel : ViewModel() {
    }
 
    private fun listenToNutrition(){
-      firestore.collection("Food").document("Date").collection(formatted).addSnapshotListener{
+      firestore.collection("Login").document(userEmail).collection("Food").document("Date").collection(formatted).addSnapshotListener{
             snapshot, e ->
          if (e != null){
             Log.w(TAG, LISTEN_FAIL, e)
             return@addSnapshotListener
          }
          if (snapshot != null){
-            var nutri = Nutrition()
+            val nutri = Nutrition()
             nutri.calories = "0"
             nutri.carbs = "0"
             nutri.fat = "0"
@@ -94,7 +98,7 @@ class MainViewModel : ViewModel() {
    }
 
    private fun listenToExercise(){
-      firestore.collection("Exercise").document("Date").collection(formatted).addSnapshotListener{
+      firestore.collection("Login").document(userEmail).collection("Exercise").document("Date").collection(formatted).addSnapshotListener{
             snapshot, e ->
          if (e != null){
             Log.w(TAG, LISTEN_FAIL, e)
@@ -121,7 +125,9 @@ class MainViewModel : ViewModel() {
    }
 
    fun save(bmi: BMI) {
-      val document = firestore.collection("BMI").document()
+      val user = FirebaseAuth.getInstance().currentUser
+      val email = user!!.email.toString()
+      val document = firestore.collection("Login").document(email).collection("BMI").document(formatted)
          bmi.bmiId = document.id
          val set = document.set(bmi)
          set.addOnSuccessListener {
@@ -145,12 +151,12 @@ class MainViewModel : ViewModel() {
       set(value) {_infoExercise = value}
 
    fun fetchExerciseInfo(exerciseName: ExerciseRequest) {
-      exerciseService.fetchExercise(exerciseName)
+      exerciseService.fetchExercise(exerciseName, userEmail)
    }
 
 
    fun fetchNutritionInfo(nutritionID:String) {
-      nutritionService.doComplexSearch(nutritionID)
+      nutritionService.doComplexSearch(nutritionID, userEmail)
    }
 
    var exercises:Exercise
@@ -167,6 +173,17 @@ class MainViewModel : ViewModel() {
       val targetString: String = target
       val replacementString: String = replacement
       return entireString.replace(targetString, replacementString)
+   }
+
+   fun getUserProfile(): String {
+      val user = FirebaseAuth.getInstance().currentUser
+      var email = ""
+      user?.let {
+         email = user.email.toString()
+         val uid = user.uid
+         return email
+      }
+      return email
    }
 
 }

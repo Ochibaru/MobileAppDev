@@ -11,6 +11,11 @@
   <color name="text_black_87">#de000000</color>
   <color name="text_white_87">#deFFFFFF</color>
 
+  <!-- Login -->
+  <color name="colorBackground">#5E2563</color>
+  <color name="colorProgressBar">#1b6ddf</color>
+  <color name="colorTextView">#83898E</color>
+
   <!-- Pie Chart -->
   <color name="greenish">#00b597</color>
   <color name="blueish">#1b6ddf</color>

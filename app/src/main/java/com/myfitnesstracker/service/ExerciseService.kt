@@ -19,7 +19,7 @@ object ExerciseService {
     *  Makes call to Nutritionix API and returns results to JSON objects.
     *  Results are than added to Firestore
     */
-    fun fetchExercise(exercise: ExerciseRequest): Exercise? {
+    fun fetchExercise(exercise: ExerciseRequest, userEntry: String): Exercise? {
         var _exercises: Exercise? = null
         val iExerciseDAO: IExerciseDAO? =
             RetrofitInstanceNutritionix.getRetrofitInstance()?.create()
@@ -52,7 +52,8 @@ object ExerciseService {
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
                 val formatted = current.format(formatter)
                 val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-                firestore.collection("Exercise").document("Date").collection(formatted).document(exerciseInput).set(exerciseResponse)
+                //firestore.collection("Login").document(userEntry).collection(formatted).document(exerciseInput).set(exerciseResponse)
+                firestore.collection("Login").document(userEntry).collection("Exercise").document("Date").collection(formatted).document(exerciseInput).set(exerciseResponse)
                 _exercises = exerciseResponse
             }
             override fun onFailure(call: Call<Any>, t: Throwable) {

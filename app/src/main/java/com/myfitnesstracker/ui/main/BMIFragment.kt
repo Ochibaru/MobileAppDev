@@ -1,5 +1,7 @@
 package com.myfitnesstracker.ui.main
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -80,19 +82,48 @@ class BMIFragment : Fragment() {
     }
 
     private fun calculateBMI(){
-        weightInput = txtWeight.text.toString().toDouble()
-        heightInput = txtHeight.text.toString().toDouble()
-        ageInput = txtAge.text.toString().toInt()
-        goalInput = txtGoal.text.toString().toDouble()
+        if (txtHeight.text.toString() == "" || txtWeight.text.toString() == ""){
+            val dialogBuilder = AlertDialog.Builder(context)
+            dialogBuilder.setMessage("Please make sure measurements are not empty.")
+                .setCancelable(false)
+                .setNegativeButton("Cancel", DialogInterface.OnClickListener {
+                        dialog, _ -> dialog.cancel()
+                })
+            val alert = dialogBuilder.create()
+            alert.setTitle("Empty Measurement")
+            alert.show()
+        } else {
+            weightInput = txtWeight.text.toString().toDouble()
+            heightInput = txtHeight.text.toString().toDouble()
 
-        if (heightCheck == "ft" && weightCheck == "lb"){
-            bmiCalculation = (weightInput / (heightInput * heightInput)) * 703
-            measurementSystem = "imperial"
+            ageInput = txtAge.text.toString().toInt()
+            goalInput = txtGoal.text.toString().toDouble()
+
+            if (heightCheck == "ft" && weightCheck == "lb"){
+                bmiCalculation = (weightInput / (heightInput * heightInput)) * 703
+                measurementSystem = "imperial"
+            }
+            else if (heightCheck == "cm" && weightCheck == "kg"){
+                bmiCalculation = (weightInput / (heightInput * heightInput))
+                measurementSystem = "metric"
+            }
+
+            Toast.makeText(context, "BMI: $bmiCalculation", Toast.LENGTH_SHORT).show();
+
+
+            val bmi = BMI().apply {
+                measurement = measurementSystem
+                height = heightInput
+                weight = weightInput
+                bmi = bmiCalculation
+                age = ageInput
+                goal = goalInput
+                gender = genderInput
+            }
+            viewModel.save(bmi)
         }
-        else if (heightCheck == "cm" && weightCheck == "kg"){
-            bmiCalculation = (weightInput / (heightInput * heightInput))
-            measurementSystem = "metric"
         }
+
         /* else {
             val dialogBuilder = AlertDialog.Builder(context)
             dialogBuilder.setMessage("Please make sure measurements are both imperial or both metric.")
@@ -105,23 +136,6 @@ class BMIFragment : Fragment() {
             alert.show()
         }
          */
-
-        /*
-        Toast.makeText(applicationContext, "BMI: $bmiCalculation", Toast.LENGTH_SHORT).show();
-         */
-
-        val bmi = BMI().apply {
-            measurement = measurementSystem
-            height = heightInput
-            weight = weightInput
-            bmi = bmiCalculation
-            age = ageInput
-            goal = goalInput
-            gender = genderInput
-        }
-        viewModel.save(bmi)
-    }
-
     companion object {
         fun newInstance() = BMIFragment()
     }

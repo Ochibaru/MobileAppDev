@@ -1,5 +1,6 @@
 package com.myfitnesstracker
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.gordonwong.materialsheetfab.DimOverlayFrameLayout
 import com.gordonwong.materialsheetfab.MaterialSheetFab
 import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener
@@ -27,7 +30,7 @@ open class  MainActivity : AppCompatActivity(), View.OnClickListener {
 
     lateinit var viewPager: ViewPager2
     lateinit var tabLayout: TabLayout
-
+    private lateinit var userEmail: String
     private lateinit var viewModel: MainViewModel
     private var materialSheetFab: MaterialSheetFab<Fab>? = null
     private var statusBarColor = 0
@@ -37,6 +40,7 @@ open class  MainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.first_fragment)
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
+        checkCurrentUser()
         setupFab()
 
         // Wires button to search for user's food query
@@ -73,9 +77,9 @@ open class  MainActivity : AppCompatActivity(), View.OnClickListener {
         TabLayoutMediator(tabLayout, viewPager,
             TabLayoutMediator.TabConfigurationStrategy { tab, position ->
                 if (position == 1){
-                    tab.text = "BMI"
-                } else {
                     tab.text = "Today's Overview"
+                } else {
+                    tab.text = "BMI Calculator"
                 }
             }).attach()
 
@@ -147,4 +151,17 @@ open class  MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun createCardAdapter(): ViewPagerAdapter? {
         return ViewPagerAdapter(this)
     }
+
+    // Checks to make sure user is signed in so the firebase database is saved correctly
+    private fun checkCurrentUser() {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            userEmail = viewModel.getUserProfile()
+        } else {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+
 }

@@ -31,4 +31,14 @@
     <string name="burned">BURNED</string>
     <string name="carbs">CARBS</string>
     <string name="protein">PROTEIN</string>
+    <string name="login">login</string>
+    <string name="skip">skip</string>
+    <string name="forget_password">forgot password</string>
+    <string name="sign_up">sign up</string>
+    <string name="welcome_back">welcome</string>
+    <string name="fit">Fit</string>
+    <string name="read_it_together">Fit</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="send">send</string>
 </resources>

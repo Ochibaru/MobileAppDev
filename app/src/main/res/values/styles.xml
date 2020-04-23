@@ -19,7 +19,7 @@
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="colorControlNormal">@android:color/white</item>
         <item name="colorControlHighlight">#8fff</item>
-        <item name="colorControlActivated">@color/theme_accent</item>
+        <item name="colorControlActivated">@color/tealish</item>
     </style>
 
     <style name="ThemeOverlay.MaterialSheetFab.ActionBar.Popup" parent="ThemeOverlay.AppCompat.Light" />
@@ -85,6 +85,10 @@
         <item name="md_color_title">@color/blueish</item>
         <item name="md_color_content">@color/tealish</item>
         <item name="md_color_button_text">@color/grayish</item>
+    </style>
+
+    <style name="ProgressBarStyle">
+        <item name="colorAccent">@color/colorProgressBar</item>
     </style>
 
 </resources>

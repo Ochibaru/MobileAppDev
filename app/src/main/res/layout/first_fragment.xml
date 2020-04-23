@@ -28,57 +28,60 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <!-- FAB implementation -->
         <com.myfitnesstracker.ui.scripts.Fab
             android:id="@+id/fab"
             style="@style/Widget.MaterialSheetFab.Fab"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true" />
 
         <!-- Overlay that dims the screen -->
         <com.gordonwong.materialsheetfab.DimOverlayFrameLayout
             android:id="@+id/overlay"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <io.codetail.widget.RevealLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end|bottom"
+                android:orientation="vertical">
+
+                <!-- Card that contains buttons -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/fab_sheet"
+                    style="@style/Widget.MaterialSheetFab.Sheet">
+
+                    <!-- List that contains buttons -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- Food Button -->
+                        <Button
+                            android:id="@+id/fab_button_item_food"
+                            style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
+                            android:drawableStart="@drawable/btnnutrition_bmi"
+                            android:text="@string/food" />
+
+
+                        <!-- Exercise Button -->
+                        <Button
+                            android:id="@+id/fab_button_item_exercise"
+                            style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
+                            android:drawableStart="@drawable/btnaddexercise_bmi"
+                            android:text="@string/exercise" />
+
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </io.codetail.widget.RevealLinearLayout>
+        </com.gordonwong.materialsheetfab.DimOverlayFrameLayout>
 
         <!-- Circular reveal container for the card -->
-        <io.codetail.widget.RevealLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="end|bottom"
-            android:orientation="vertical">
-
-            <!-- Card that contains buttons -->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/fab_sheet"
-                style="@style/Widget.MaterialSheetFab.Sheet">
-
-                <!-- List that contains buttons -->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <!-- Food Button -->
-                    <Button
-                        android:id="@+id/fab_button_item_food"
-                        style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
-                        android:drawableStart="@drawable/btnnutrition_bmi"
-                        android:text="@string/food" />
-
-
-                    <!-- Exercise Button -->
-                    <Button
-                        android:id="@+id/fab_button_item_exercise"
-                        style="@style/TextAppearance.MaterialSheetFab.Sheet.Item"
-                        android:drawableStart="@drawable/btnaddexercise_bmi"
-                        android:text="@string/exercise" />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </io.codetail.widget.RevealLinearLayout>
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
