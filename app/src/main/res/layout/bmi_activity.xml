@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:theme="@style/AppTheme.Custom"
+    tools:context=".ui.main.BMIFragment">
+
+    <ImageView
+        android:id="@+id/bggradient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="51dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="70dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/bmi"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="130dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="87dp"
+        android:layout_marginTop="70dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/calculator"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnMale"
+        android:layout_width="144dp"
+        android:layout_height="144dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="128dp"
+        android:background="@drawable/frame"
+        android:backgroundTint="#1472909D"
+        android:src="@drawable/btnmale_bmi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="TODO" />
+
+    <ImageButton
+        android:id="@+id/btnFemale"
+        android:layout_width="144dp"
+        android:layout_height="144dp"
+        android:layout_marginStart="180dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/frame"
+        android:backgroundTint="#1472909D"
+        android:src="@drawable/btnfemale_bmi"
+        app:layout_constraintBottom_toTopOf="@+id/bgheightbutton"
+        app:layout_constraintStart_toStartOf="@id/btnMale"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/bgheightbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:scaleType="fitXY"
+        android:scaleX=".85"
+        android:scaleY=".85"
+        android:src="@drawable/bgbmibutton_bmi"
+        app:layout_constraintStart_toStartOf="@id/btnFemale"
+        app:layout_constraintTop_toTopOf="@id/btnFemale" />
+
+    <EditText
+        android:id="@+id/txtHeight"
+        android:layout_width="75dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="12dp"
+        android:adjustViewBounds="true"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:inputType="numberDecimal"
+        android:hint="@string/_0"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/btnFemale"
+        app:layout_constraintTop_toTopOf="@id/bgheightbutton" />
+
+    <ImageView
+        android:id="@+id/bgweightbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:scaleType="fitXY"
+        android:scaleX=".85"
+        android:scaleY=".85"
+        android:src="@drawable/bgbmibutton_bmi"
+        app:layout_constraintStart_toStartOf="@id/btnFemale"
+        app:layout_constraintTop_toTopOf="@id/bgheightbutton" />
+
+    <EditText
+        android:id="@+id/txtWeight"
+        android:layout_width="75dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="12dp"
+        android:adjustViewBounds="true"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:inputType="numberDecimal"
+        android:hint="@string/_0"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/btnFemale"
+        app:layout_constraintTop_toTopOf="@id/bgweightbutton" />
+
+    <ImageView
+        android:id="@+id/bggoalbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:scaleType="fitXY"
+        android:scaleX=".85"
+        android:scaleY=".85"
+        android:src="@drawable/bgbmibutton_bmi"
+        app:layout_constraintStart_toStartOf="@id/btnFemale"
+        app:layout_constraintTop_toTopOf="@id/bgweightbutton" />
+
+    <EditText
+        android:id="@+id/txtGoal"
+        android:layout_width="75dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="12dp"
+        android:adjustViewBounds="true"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:inputType="numberDecimal"
+        android:hint="@string/_0"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/btnFemale"
+        app:layout_constraintTop_toTopOf="@id/bggoalbutton" />
+
+    <ImageView
+        android:id="@+id/bgagebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:scaleType="fitXY"
+        android:scaleX=".85"
+        android:scaleY=".85"
+        android:src="@drawable/bgbmibutton_bmi"
+        app:layout_constraintStart_toStartOf="@id/btnFemale"
+        app:layout_constraintTop_toTopOf="@id/bggoalbutton" />
+
+    <EditText
+        android:id="@+id/txtAge"
+        android:layout_width="75dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="12dp"
+        android:adjustViewBounds="true"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:inputType="numberDecimal"
+        android:hint="@string/_0"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/btnFemale"
+        app:layout_constraintTop_toTopOf="@id/bgagebutton" />
+
+    <Button
+        android:id="@+id/btnHeightCM"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="175dp"
+        android:backgroundTint="#00FFFFFF"
+        android:fontFamily="sans-serif"
+        android:text="@string/cm"
+        android:textColor="#72909D"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/btnMale"
+        app:layout_constraintTop_toTopOf="@id/btnFemale" />
+
+    <Button
+        android:id="@+id/btnHeightFT"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginHorizontal="75dp"
+        android:layout_marginTop="175dp"
+        android:backgroundTint="#00FFFFFF"
+        android:fontFamily="sans-serif"
+        android:text="@string/ft"
+        android:textColor="#72909D"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/btnMale"
+        app:layout_constraintTop_toTopOf="@id/btnFemale" />
+
+    <Button
+        android:id="@+id/btnWeightKG"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="65dp"
+        android:backgroundTint="#00FFFFFF"
+        android:fontFamily="sans-serif"
+        android:text="@string/kg"
+        android:textColor="#72909D"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/btnMale"
+        app:layout_constraintTop_toTopOf="@id/btnHeightFT" />
+
+    <Button
+        android:id="@+id/btnWeightLB"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginHorizontal="75dp"
+        android:layout_marginTop="65dp"
+        android:backgroundTint="#00FFFFFF"
+        android:fontFamily="sans-serif"
+        android:text="@string/lb"
+        android:textColor="#72909D"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/btnMale"
+        app:layout_constraintTop_toTopOf="@id/btnHeightFT" />
+
+    <TextView
+        android:id="@+id/lblGoal"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="85dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/goal"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/btnMale"
+        app:layout_constraintTop_toTopOf="@id/btnWeightLB" />
+
+    <TextView
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="75dp"
+        android:fontFamily="sans-serif"
+        android:text="@string/age"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/btnMale"
+        app:layout_constraintTop_toTopOf="@id/lblGoal" />
+
+    <ImageButton
+        android:id="@+id/btnCalculateBMI"
+        android:layout_width="256dp"
+        android:layout_height="86dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="644dp"
+        android:background="#00FFFFFF"
+        android:src="@drawable/btncalculatebmi_bmi"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bggradient" />
+
+    <TextView
+        android:id="@+id/txtBMI"
+        android:layout_width="126dp"
+        android:layout_height="29dp"
+        android:hint="@string/bmi"
+        android:text="@string/bmi"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/btnCalculateBMI"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bgagebutton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

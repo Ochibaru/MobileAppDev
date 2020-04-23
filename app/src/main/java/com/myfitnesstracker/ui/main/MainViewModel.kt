@@ -4,42 +4,51 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreSettings
-import com.google.firebase.storage.FirebaseStorage
-import com.myfitnesstracker.dto.ExerciseDTO
-import com.myfitnesstracker.dto.Nutrition
-import com.myfitnesstracker.dto.NutritionSearchResultDTO
+import com.google.firebase.auth.FirebaseAuth
+import androidx.lifecycle.viewModelScope
+import com.google.firebase.firestore.*
+import com.myfitnesstracker.dto.*
 import com.myfitnesstracker.service.ExerciseService
-import com.myfitnesstracker.service.NutritionSearchService
 import com.myfitnesstracker.service.NutritionService
-import com.myfitnesstracker.ui.dto.BMI
+import com.myfitnesstracker.dto.BMI
+import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 
 class MainViewModel : ViewModel() {
 
-   private var mainFragment: MainFragment = MainFragment()
-   //private var storageReference = FirebaseStorage.getInstance().reference
    private var _bmis: MutableLiveData<ArrayList<BMI>> = MutableLiveData<ArrayList<BMI>>()
-   private var _exercises = MutableLiveData<ArrayList<ExerciseDTO>>()
-   private var _nutrition = MutableLiveData<ArrayList<Nutrition>>()
-   private var _nutritionSearch = MutableLiveData<ArrayList<NutritionSearchResultDTO>>()
-   private lateinit var firestore: FirebaseFirestore
-   var exerciseService: ExerciseService = ExerciseService()
-   var nutritionService: NutritionService = NutritionService()
-   var nutritionSearchResultService: NutritionSearchService = NutritionSearchService()
+   private var _infoNutri:MutableLiveData<Nutrition> = MutableLiveData<Nutrition>()
+   private var _infoExercise:MutableLiveData<Exercise> = MutableLiveData<Exercise>()
+   private var _exercises: Exercise = Exercise()
+   private var _nutrition: ComplexSearchResult = ComplexSearchResult()
+   var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+   private var userEmail: String
+   var nutritionService: NutritionService = NutritionService
+   var exerciseService: ExerciseService = ExerciseService
 
-   /*    Commenting out till error is fixed with Firebase
+   val current = LocalDateTime.now()
+   val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+   val formatted = current.format(formatter)
+   // Replace where var formatted is to have test data input, use formatted to get current dates database information
+   var fixedFormat: String = "2020-04-20"
+
+   val LISTEN_FAIL = "Listen Failed"
+
    init {
-      firestore = FirebaseFirestore.getInstance()
       firestore.firestoreSettings = FirebaseFirestoreSettings.Builder().build()
+      userEmail = getUserProfile()
       listenToBMI()
+      listenToNutrition()
+      listenToExercise()
    }
 
    private fun listenToBMI() {
-      firestore.collection("BMI").addSnapshotListener{
+      firestore.collection("Login").document(userEmail).collection("BMI").addSnapshotListener{
          snapshot, e ->
          if (e != null){
-            Log.w(TAG, "Listen Failed", e)
+            Log.w(TAG, LISTEN_FAIL, e)
             return@addSnapshotListener
          }
          if (snapshot != null){
@@ -56,8 +65,70 @@ class MainViewModel : ViewModel() {
       }
    }
 
+   private fun listenToNutrition(){
+      firestore.collection("Login").document(userEmail).collection("Food").document("Date").collection(formatted).addSnapshotListener{
+            snapshot, e ->
+         if (e != null){
+            Log.w(TAG, LISTEN_FAIL, e)
+            return@addSnapshotListener
+         }
+         if (snapshot != null){
+            val nutri = Nutrition()
+            nutri.calories = "0"
+            nutri.carbs = "0"
+            nutri.fat = "0"
+            nutri.protein = "0"
+            val documents = snapshot.documents
+            documents.forEach{
+               val nutrition = it.toObject(Nutrition::class.java)
+               if (nutrition != null){
+                  val addCalories = nutrition.calories!!.toInt() + nutri.calories!!.toInt()
+                  val addFats = removeCharacter(nutrition.fat!!, "g", "").toInt() + nutri.fat!!.toInt()
+                  val addCarbs = removeCharacter(nutrition.carbs!!, "g", "").toInt() + nutri.carbs!!.toInt()
+                  val addProteins = removeCharacter(nutrition.protein!!, "g", "").toInt() + nutri.protein!!.toInt()
+
+                  nutri.calories = addCalories.toString()
+                  nutri.fat = addFats.toString()
+                  nutri.carbs = addCarbs.toString()
+                  nutri.protein = addProteins.toString()
+               }
+            }
+            _infoNutri.value = nutri
+         }
+      }
+   }
+
+   private fun listenToExercise(){
+      firestore.collection("Login").document(userEmail).collection("Exercise").document("Date").collection(formatted).addSnapshotListener{
+            snapshot, e ->
+         if (e != null){
+            Log.w(TAG, LISTEN_FAIL, e)
+            return@addSnapshotListener
+         }
+         if (snapshot != null){
+            val exerc = Exercise()
+            exerc.met = 0.0
+            exerc.durationMin = 0.0
+            exerc.name = ""
+            exerc.nfCalories = 0.0
+            exerc.userInput = ""
+            val documents = snapshot.documents
+
+            documents.forEach{
+               val exercise = it.toObject(Exercise::class.java)
+               if (exercise != null){
+                  exerc.nfCalories = exercise.nfCalories
+               }
+            }
+            _infoExercise.value = exerc
+         }
+      }
+   }
+
    fun save(bmi: BMI) {
-      val document = firestore.collection("BMI").document()
+      val user = FirebaseAuth.getInstance().currentUser
+      val email = user!!.email.toString()
+      val document = firestore.collection("Login").document(email).collection("BMI").document(formatted)
          bmi.bmiId = document.id
          val set = document.set(bmi)
          set.addOnSuccessListener {
@@ -68,50 +139,63 @@ class MainViewModel : ViewModel() {
          }
    }
 
-    */
-
-   init {
-      fetchNutritionSearchResults("pho")
+   fun fetchHeightWeight(height: String, weight: String) {
+      viewModelScope.launch{
+         _bmis.fetchHeightWeight("$height $weight")
+      }
    }
 
    internal var bmis:MutableLiveData<ArrayList<BMI>>
       get() {return _bmis}
       set(value) {_bmis = value}
 
+   internal var infoNutri:MutableLiveData<Nutrition>
+      get() {return _infoNutri}
+      set(value) {_infoNutri = value}
 
-    //var userBMI = mainFragment.calculateBMI()
-    fun saveBMI(bmi: String){
-       var calculatedbmi = mainFragment.saveBMI(bmi)
-    }
+   internal var infoExercise:MutableLiveData<Exercise>
+      get() {return _infoExercise}
+      set(value) {_infoExercise = value}
 
-    fun fetchUserInputBMI(weight: Double, height: Double) {
-      var userInputBMI = mainFragment.fetchUserInputBMI(weight, height)
+   fun fetchExerciseInfo(exerciseName: ExerciseRequest) {
+      exerciseService.fetchExercise(exerciseName, userEmail)
    }
 
 
-   fun fetchExerciseInfo(exerciseName:String) {
-      _exercises = exerciseService.fetchExercise(exerciseName)
+   fun fetchNutritionInfo(nutritionID:String) {
+      nutritionService.doComplexSearch(nutritionID, userEmail)
    }
 
-   fun fetchNutritionSearchResults(nutritionSearch:String){
-      _nutritionSearch = nutritionSearchResultService.fetchNutritionSearchResults(nutritionSearch)
-   }
-
-   fun fetchNutritionInfo(nutritionID:String){
-      _nutrition = nutritionService.fetch(nutritionID)
-   }
-
-   var exercises:MutableLiveData<ArrayList<ExerciseDTO>>
+   var exercises:Exercise
       get() { return _exercises}
       set(value) {_exercises = value}
 
-   var nutritionSearch:MutableLiveData<ArrayList<NutritionSearchResultDTO>>
-      get() {return _nutritionSearch}
-      set(value) {_nutritionSearch = value}
-
-   var nutrition:MutableLiveData<ArrayList<Nutrition>>
+   var nutrition:ComplexSearchResult
       get() { return _nutrition}
       set(value) {_nutrition = value}
+
+   // Remove value from string to be able to convert string to a number
+   fun removeCharacter(enitre:String, target:String, replacement:String):String{
+      val entireString: String = enitre
+      val targetString: String = target
+      val replacementString: String = replacement
+      return entireString.replace(targetString, replacementString)
+   }
+
+   fun getUserProfile(): String {
+      val user = FirebaseAuth.getInstance().currentUser
+      var email = ""
+      user?.let {
+         email = user.email.toString()
+         val uid = user.uid
+         return email
+      }
+      return email
+   }
+
+}
+
+private fun <T> MutableLiveData<T>.fetchHeightWeight(s: String) {
 
 }
 
