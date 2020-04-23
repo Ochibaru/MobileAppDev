@@ -4,11 +4,13 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.*
 import com.myfitnesstracker.dto.*
 import com.myfitnesstracker.service.ExerciseService
 import com.myfitnesstracker.service.NutritionService
-import com.myfitnesstracker.ui.dto.BMI
+import com.myfitnesstracker.dto.BMI
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -132,6 +134,12 @@ class MainViewModel : ViewModel() {
          }
    }
 
+   fun fetchHeightWeight(height: String, weight: String) {
+      viewModelScope.launch{
+         _bmis.fetchHeightWeight("$height $weight")
+      }
+   }
+
    internal var bmis:MutableLiveData<ArrayList<BMI>>
       get() {return _bmis}
       set(value) {_bmis = value}
@@ -168,6 +176,10 @@ class MainViewModel : ViewModel() {
       val replacementString: String = replacement
       return entireString.replace(targetString, replacementString)
    }
+
+}
+
+private fun <T> MutableLiveData<T>.fetchHeightWeight(s: String) {
 
 }
 

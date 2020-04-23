@@ -1,16 +1,17 @@
 package com.myfitnesstracker.ui.main
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.myfitnesstracker.R
-import com.myfitnesstracker.ui.dto.BMI
+import com.myfitnesstracker.dto.BMI
 import kotlinx.android.synthetic.main.bmi_activity.*
 import kotlinx.android.synthetic.main.bmi_activity.view.*
 
@@ -86,14 +87,18 @@ class BMIFragment : Fragment() {
         goalInput = txtGoal.text.toString().toDouble()
 
         if (heightCheck == "ft" && weightCheck == "lb"){
-            bmiCalculation = (weightInput / (heightInput * heightInput)) * 703
+            bmiCalculation = (weightInput / ((heightInput * 12) * (heightInput * 12))) * 703
             measurementSystem = "imperial"
+            var bmi = String.format("%.2f", bmiCalculation).toDouble()
+            txtBMI.text = bmi.toString()
         }
         else if (heightCheck == "cm" && weightCheck == "kg"){
-            bmiCalculation = (weightInput / (heightInput * heightInput))
+            bmiCalculation = (weightInput / ((heightInput / 100) * (heightInput / 100)))
             measurementSystem = "metric"
+            var bmi = String.format("%.2f", bmiCalculation).toDouble()
+            txtBMI.text = bmi.toString()
         }
-        /* else {
+         else {
             val dialogBuilder = AlertDialog.Builder(context)
             dialogBuilder.setMessage("Please make sure measurements are both imperial or both metric.")
                 .setCancelable(false)
@@ -104,11 +109,6 @@ class BMIFragment : Fragment() {
             alert.setTitle("Measurement Mismatch")
             alert.show()
         }
-         */
-
-        /*
-        Toast.makeText(applicationContext, "BMI: $bmiCalculation", Toast.LENGTH_SHORT).show();
-         */
 
         val bmi = BMI().apply {
             measurement = measurementSystem
