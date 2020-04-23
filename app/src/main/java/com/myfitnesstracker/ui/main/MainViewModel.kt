@@ -5,11 +5,13 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.*
 import com.myfitnesstracker.dto.*
 import com.myfitnesstracker.service.ExerciseService
 import com.myfitnesstracker.service.NutritionService
-import com.myfitnesstracker.ui.dto.BMI
+import com.myfitnesstracker.dto.BMI
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -40,7 +42,6 @@ class MainViewModel : ViewModel() {
       listenToBMI()
       listenToNutrition()
       listenToExercise()
-
    }
 
    private fun listenToBMI() {
@@ -138,6 +139,12 @@ class MainViewModel : ViewModel() {
          }
    }
 
+   fun fetchHeightWeight(height: String, weight: String) {
+      viewModelScope.launch{
+         _bmis.fetchHeightWeight("$height $weight")
+      }
+   }
+
    internal var bmis:MutableLiveData<ArrayList<BMI>>
       get() {return _bmis}
       set(value) {_bmis = value}
@@ -185,6 +192,10 @@ class MainViewModel : ViewModel() {
       }
       return email
    }
+
+}
+
+private fun <T> MutableLiveData<T>.fetchHeightWeight(s: String) {
 
 }
 

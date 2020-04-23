@@ -279,11 +279,23 @@
         android:id="@+id/btnCalculateBMI"
         android:layout_width="256dp"
         android:layout_height="86dp"
-        android:layout_marginTop="650dp"
-        android:layout_marginStart="70dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="644dp"
         android:background="#00FFFFFF"
         android:src="@drawable/btncalculatebmi_bmi"
-        app:layout_constraintTop_toTopOf="@+id/bggradient"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/bggradient" />
+
+    <TextView
+        android:id="@+id/txtBMI"
+        android:layout_width="126dp"
+        android:layout_height="29dp"
+        android:hint="@string/bmi"
+        android:text="@string/bmi"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/btnCalculateBMI"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bgagebutton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
