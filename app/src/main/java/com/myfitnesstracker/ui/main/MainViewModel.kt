@@ -11,9 +11,9 @@ import com.myfitnesstracker.dto.*
 import com.myfitnesstracker.service.ExerciseService
 import com.myfitnesstracker.service.NutritionService
 import com.myfitnesstracker.dto.BMI
+import com.myfitnesstracker.ui.scripts.Time
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+
 
 
 class MainViewModel : ViewModel() {
@@ -27,10 +27,8 @@ class MainViewModel : ViewModel() {
    private var userEmail: String
    var nutritionService: NutritionService = NutritionService
    var exerciseService: ExerciseService = ExerciseService
-
-   val current = LocalDateTime.now()
-   val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-   val formatted = current.format(formatter)
+   private lateinit var time: Time
+   private val formatted = time.getLocalTimeAndConvertToString()
    val LISTEN_FAIL = "Listen Failed"
 
    init {

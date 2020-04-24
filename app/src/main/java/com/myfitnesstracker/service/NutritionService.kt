@@ -8,17 +8,20 @@ import com.myfitnesstracker.dto.Bad
 import com.myfitnesstracker.dto.ComplexSearchResult
 import com.myfitnesstracker.dto.Good
 import com.myfitnesstracker.dto.Nutrition
+import com.myfitnesstracker.ui.scripts.StringManipulator
+import com.myfitnesstracker.ui.scripts.Time
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 
 object NutritionService {
+    private lateinit var time: Time
+    private val formatted = time.getLocalTimeAndConvertToString()
+    private val stringManipulator = StringManipulator()
 
     /*
     *  Makes call to Spoonacular API and returns results to JSON objects.
@@ -58,7 +61,6 @@ object NutritionService {
                     val nutritionId = complexSearchResult.id!!
                     val setComplex = documentComplex.set(complexSearchResult)
 
-
                     setComplex.addOnSuccessListener {
                         var _searchNutrition: Nutrition? = null
                         val iNutrition: INutritionDAO? =
@@ -70,12 +72,9 @@ object NutritionService {
                                 response: Response<Any>
                             ){
                                 var responseBodyNutrition = response.body().toString()
-
-                                responseBodyNutrition = removeNutritionSpaces(responseBodyNutrition)
-
+                                responseBodyNutrition = stringManipulator.removeWhitespaceVitamin(responseBodyNutrition)
+                                responseBodyNutrition = stringManipulator.removeWhitespaceSaturated(responseBodyNutrition)
                                 val objNutritionJson = JSONObject(responseBodyNutrition)
-
-
                                 val documentNutrition = firestore.collection("Food").document()
 
                                 val nutrition = Nutrition().apply {
@@ -95,9 +94,6 @@ object NutritionService {
                                     nutritionDocumentId = documentNutrition.id
 
                                 }
-                                val current = LocalDateTime.now()
-                                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                                val formatted = current.format(formatter)
                                 firestore.collection("Login").document(userEntry).collection("Food").document("Date").collection(formatted).document(foodItem).set(nutrition)
                                 _searchNutrition = nutrition
                             }
@@ -107,100 +103,15 @@ object NutritionService {
                             }
                         })
                         return@addOnSuccessListener
-
                     }
-
                     _search = complexSearchResult
                 }
-
                 override fun onFailure(call: Call<Any>, t: Throwable) {
                     Log.d("Error","Error at Retrofit thread enqueue in Nutrition Service for iComplexSearchDAO call.")
                 }
             })
          return _search
     }
-
-    /*
-    * Takes the raw string from the API call and removes spaces from key-value pairs.
-    * As Json objects are not allowed to have spaces in their values.
-    *
-     */
-    fun removeNutritionSpaces(nutritionResultString: String): String {
-        var nutritionString = nutritionResultString
-
-        if(nutritionString.contains("Vitamin A")){
-            val target = "Vitamin A"
-            val replacement = "VitaminA"
-            nutritionString = nutritionString.replace(target, replacement)
-        }
-        if(nutritionString.contains("Vitamin B1")){
-            val target = "Vitamin B1"
-            val replacement = "VitaminB1"
-            nutritionString = nutritionString.replace(target, replacement)
-        }
-        if(nutritionString.contains("Vitamin B2")){
-            val target = "Vitamin B2"
-            val replacement = "VitaminB2"
-            nutritionString = nutritionString.replace(target, replacement)
-        }
-        if(nutritionString.contains("Vitamin B3")){
-            val target = "Vitamin B3"
-            val replacement = "VitaminB3"
-            nutritionString = nutritionString.replace(target, replacement)
-        }
-        if(nutritionString.contains("Vitamin B5")){
-            val target = "Vitamin B5"
-            val replacement = "VitaminB5"
-            nutritionString = nutritionString.replace(target, replacement)
-        }
-        if(nutritionString.contains("Vitamin B6")){
-            val target = "Vitamin B6"
-            val replacement = "VitaminB6"
-            nutritionString = nutritionString.replace(target, replacement)
-        }
-        if(nutritionString.contains("Vitamin B7")){
-            val target = "Vitamin B7"
-            val replacement = "VitaminB7"
-            nutritionString = nutritionString.replace(target, replacement)
-        }
-        if(nutritionString.contains("Vitamin B9")){
-            val target = "Vitamin B9"
-            val replacement = "VitaminB9"
-            nutritionString = nutritionString.replace(target, replacement)
-        }
-        if(nutritionString.contains("Vitamin B12")){
-            val target = "Vitamin B12"
-            val replacement = "VitaminB12"
-            nutritionString = nutritionString.replace(target, replacement)
-        }
-        if(nutritionString.contains("Vitamin C")){
-            val target = "Vitamin C"
-            val replacement = "VitaminC"
-            nutritionString = nutritionString.replace(target, replacement)
-        }
-        if(nutritionString.contains("Vitamin D")){
-            val target = "Vitamin D"
-            val replacement = "VitaminD"
-            nutritionString = nutritionString.replace(target, replacement)
-        }
-        if(nutritionString.contains("Vitamin E")){
-            val target = "Vitamin E"
-            val replacement = "VitaminE"
-            nutritionString = nutritionString.replace(target, replacement)
-        }
-        if(nutritionString.contains("Vitamin K")){
-            val target = "Vitamin K"
-            val replacement = "VitaminK"
-            nutritionString = nutritionString.replace(target, replacement)
-        }
-        if(nutritionString.contains("Saturated Fat")){
-            val target = "Saturated Fat"
-            val replacement = "SaturatedFat"
-            nutritionString = nutritionString.replace(target, replacement)
-        }
-        return nutritionString
-    }
-
     /*
     * Function to parse through the Bad DTO and add it to array
     */
@@ -213,14 +124,13 @@ object NutritionService {
         val badArrayJson: JSONArray = objNutritionJson.getJSONArray("bad")
 
         for (i in 0 until badArrayJson.length()){
-            val badArrayItem: Bad = Bad()
+            val badArrayItem = Bad()
             val itemBad = badArrayJson.getJSONObject(i)
             badArrayItem.title = itemBad["title"] as String
             badArrayItem.amount = itemBad["amount"].toString()
             badArrayItem.percentOfDailyNeeds = itemBad["percentOfDailyNeeds"] as Double
             badArrayJsonList.add(badArrayItem)
         }
-
         return badArrayJsonList
     }
 
@@ -236,7 +146,7 @@ object NutritionService {
         val goodArrayJson: JSONArray = objNutritionJson.getJSONArray("good")
 
         for (i in 0 until goodArrayJson.length()){
-            val goodArrayItem: Good = Good()
+            val goodArrayItem = Good()
             val itemBad = goodArrayJson.getJSONObject(i)
             goodArrayItem.title = itemBad["title"] as String
             goodArrayItem.amount = itemBad["amount"].toString()

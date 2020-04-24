@@ -89,13 +89,13 @@ class BMIFragment : Fragment() {
         if (heightCheck == "ft" && weightCheck == "lb"){
             bmiCalculation = (weightInput / ((heightInput * 12) * (heightInput * 12))) * 703
             measurementSystem = "imperial"
-            var bmi = String.format("%.2f", bmiCalculation).toDouble()
+            val bmi = String.format("%.2f", bmiCalculation).toDouble()
             txtBMI.text = bmi.toString()
         }
         else if (heightCheck == "cm" && weightCheck == "kg"){
             bmiCalculation = (weightInput / ((heightInput / 100) * (heightInput / 100)))
             measurementSystem = "metric"
-            var bmi = String.format("%.2f", bmiCalculation).toDouble()
+            val bmi = String.format("%.2f", bmiCalculation).toDouble()
             txtBMI.text = bmi.toString()
         }
          else {

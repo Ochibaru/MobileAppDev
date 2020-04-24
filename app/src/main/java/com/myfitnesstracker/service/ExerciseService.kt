@@ -5,16 +5,17 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.myfitnesstracker.dto.Exercise
 import com.myfitnesstracker.dto.ExerciseRequest
+import com.myfitnesstracker.ui.scripts.Time
 import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.create
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 object ExerciseService {
+    private lateinit var time: Time
+    private val formatted = time.getLocalTimeAndConvertToString()
     /*
     *  Makes call to Nutritionix API and returns results to JSON objects.
     *  Results are than added to Firestore
@@ -29,6 +30,7 @@ object ExerciseService {
                 call: Call<Any>,
                 response: Response<Any>
             ){
+                // The API returns a lot of information that isn't needed and will throw errors for special characters
                 val responseExerciseCall = response.body().toString()
                 var editedResponse = responseExerciseCall.substringBefore(", photo=")
                 editedResponse = "$editedResponse}]}"
@@ -48,9 +50,6 @@ object ExerciseService {
                         met = itemExercise["met"] as Double?
                     }
                 }
-                val current = LocalDateTime.now()
-                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                val formatted = current.format(formatter)
                 val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
                 firestore.collection("Login").document(userEntry).collection("Exercise").document("Date").collection(formatted).document(exerciseInput).set(exerciseResponse)
                 _exercises = exerciseResponse
