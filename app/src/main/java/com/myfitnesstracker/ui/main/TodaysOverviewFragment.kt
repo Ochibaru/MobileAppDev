@@ -68,8 +68,6 @@ class TodaysOverviewFragment : Fragment()  {
         lblFats = view.findViewById(R.id.lblFats)
         lblProtein = view.findViewById(R.id.lblProtein)
 
-
-
         viewModel.infoExercise.observe(viewLifecycleOwner, Observer {
                 infoExercise ->
             lblBurned.text = getString(R.string.format_kcal, infoExercise.nfCalories!!.toString().substringBefore("."))
@@ -111,7 +109,6 @@ class TodaysOverviewFragment : Fragment()  {
 
         return view
     }
-
 
     companion object {
         fun newInstance() = TodaysOverviewFragment()

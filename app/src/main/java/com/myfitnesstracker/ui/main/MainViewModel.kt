@@ -31,9 +31,6 @@ class MainViewModel : ViewModel() {
    val current = LocalDateTime.now()
    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
    val formatted = current.format(formatter)
-   // Replace where var formatted is to have test data input, use formatted to get current dates database information
-   var fixedFormat: String = "2020-04-20"
-
    val LISTEN_FAIL = "Listen Failed"
 
    init {
@@ -57,7 +54,7 @@ class MainViewModel : ViewModel() {
             documents.forEach{
                val bmi = it.toObject(BMI::class.java)
                if (bmi != null){
-                  allBMIs.add(bmi!!)
+                  allBMIs.add(bmi)
                }
             }
             _bmis.value = allBMIs
@@ -141,7 +138,7 @@ class MainViewModel : ViewModel() {
 
    fun fetchHeightWeight(height: String, weight: String) {
       viewModelScope.launch{
-         _bmis.fetchHeightWeight("$height $weight")
+         fetchHeightWeight("$height $weight")
       }
    }
 
@@ -160,7 +157,6 @@ class MainViewModel : ViewModel() {
    fun fetchExerciseInfo(exerciseName: ExerciseRequest) {
       exerciseService.fetchExercise(exerciseName, userEmail)
    }
-
 
    fun fetchNutritionInfo(nutritionID:String) {
       nutritionService.doComplexSearch(nutritionID, userEmail)
@@ -195,7 +191,5 @@ class MainViewModel : ViewModel() {
 
 }
 
-private fun <T> MutableLiveData<T>.fetchHeightWeight(s: String) {
-
-}
+private fun fetchHeightWeight(s: String) {}
 

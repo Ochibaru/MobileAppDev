@@ -113,6 +113,7 @@ class LoginActivity : AppCompatActivity() {
                 val created = hashMapOf(
                     "user" to "created successfully"
                 )
+                // Can't start listening to firebase if the collection is null, this creates initial user entry
                 val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
                 val setBMI = firestore.collection("Login").document(email).collection("BMI").document().set(created)
                 setBMI.addOnSuccessListener {
@@ -199,7 +200,5 @@ class LoginActivity : AppCompatActivity() {
 
 
 }
-//firestore.collection("Login").document(email).collection("BMI").document(formatted)
-//firestore.collection("Login").document(userEntry).collection("Exercise").document(formatted).set(exerciseResponse)
-//firestore.collection("Login").document(userEntry).collection("Food").document("Date").collection(formatted).document(foodItem).set(nutrition)
+
 

@@ -28,7 +28,6 @@ class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     companion object {
         private const val CARD_ITEM_SIZE = 2
         const val BMI_POS = 0
-        //const val SHARED_POS = 1
-        //const val FAVORITES_POS = 2
+        // To add more fragments for tab, need to add var here, eg val NEW_POS = 1, change the CARD_ITEM_SIZE size and add the NEW_POS to createFragment fun
     }
 }

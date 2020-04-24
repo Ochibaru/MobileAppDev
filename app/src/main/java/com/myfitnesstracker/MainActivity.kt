@@ -82,7 +82,6 @@ open class  MainActivity : AppCompatActivity(), View.OnClickListener {
                     tab.text = "BMI Calculator"
                 }
             }).attach()
-
     }
 
     override fun onBackPressed() {
@@ -133,25 +132,19 @@ open class  MainActivity : AppCompatActivity(), View.OnClickListener {
         Toast.makeText(this, R.string.sheet_item_pressed, Toast.LENGTH_SHORT).show()
         materialSheetFab?.hideSheet()
     }
-
-
     fun getStatusBarColor(): Int {
         return window.statusBarColor
     }
-
     fun setStatusBarColor(color: Int) {
         window.statusBarColor = color
     }
-
     // Calls debounce function
     private fun Int.onClickDebounced(click: () -> Unit) {
         findViewById<Button>(this).onClickDebounced { click() }
     }
-
     private fun createCardAdapter(): ViewPagerAdapter? {
         return ViewPagerAdapter(this)
     }
-
     // Checks to make sure user is signed in so the firebase database is saved correctly
     private fun checkCurrentUser() {
         val user = FirebaseAuth.getInstance().currentUser
@@ -162,6 +155,4 @@ open class  MainActivity : AppCompatActivity(), View.OnClickListener {
             startActivity(intent)
         }
     }
-
-
 }

@@ -52,7 +52,6 @@ object ExerciseService {
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
                 val formatted = current.format(formatter)
                 val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-                //firestore.collection("Login").document(userEntry).collection(formatted).document(exerciseInput).set(exerciseResponse)
                 firestore.collection("Login").document(userEntry).collection("Exercise").document("Date").collection(formatted).document(exerciseInput).set(exerciseResponse)
                 _exercises = exerciseResponse
             }

@@ -98,7 +98,6 @@ object NutritionService {
                                 val current = LocalDateTime.now()
                                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
                                 val formatted = current.format(formatter)
-                                //firestore.collection("Food").document("User").collection(userEntry).document("Date").collection(formatted).document(foodItem).set(nutrition)
                                 firestore.collection("Login").document(userEntry).collection("Food").document("Date").collection(formatted).document(foodItem).set(nutrition)
                                 _searchNutrition = nutrition
                             }
@@ -244,8 +243,6 @@ object NutritionService {
             goodArrayItem.percentOfDailyNeeds = itemBad["percentOfDailyNeeds"] as Double
             goodArrayJsonList.add(goodArrayItem)
         }
-
         return goodArrayJsonList
     }
-
 }
